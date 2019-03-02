@@ -1,0 +1,33 @@
+{
+  "name": "majodb-mysql-builder",
+  "version": "1.0.0",
+  "description": "MajoDB Mysql Builder is query builder provides a convenient, fluent interface to creating and running database queries.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "query-builder",
+    "mysql-builder"
+  ],
+  "homepage": "https://github.com/LordAur/majodb-mysql-builder",
+  "bugs": {
+    "url": "https://github.com/LordAur/majodb-mysql-builder/issues",
+    "email": "yudha.webdev@gmail.com"
+  },
+  "author": {
+    "name": "Yudha Pratama",
+    "email": "yudha.webdev@gmail.com",
+    "url": "https://yudhapratama.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/LordAur/majodb-mysql-builder"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^5.15.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.16.0"
+  }
+}
