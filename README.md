@@ -246,7 +246,7 @@ SELECT SUM(orderId) FROM orders
 ```js
 majo
   .table('orders')
-  .min('price)
+  .min('price')
   .get()
   .then((results) => {
     res.status(200).json(results);
@@ -262,7 +262,7 @@ SELECT MIN(price) FROM orders
 ```js
 majo
   .table('orders')
-  .max('price)
+  .max('price')
   .get()
   .then((results) => {
     res.status(200).json(results);
