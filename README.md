@@ -60,7 +60,7 @@ majo
   });
 ```
 ### Query Builders
-### Select
+### Select - .select(columns)
 #### Specifying A Select Clause
 If you want select all columns from a database table.
 ```js
@@ -110,7 +110,7 @@ majo
 ```sql
 SELECT DISTINCT * FROM users
 ```
-#### Select table .from() or .table()
+#### Table - .table(table name)
 You use **.table()** or **from()** for selecting spesific table.
 ```js
 majo
@@ -122,12 +122,12 @@ majo
   })
   .catch((err) => {
     res.status(500).json(err);
-  })
+  });
 ```
 ```sql
 SELECT * FROM users
 ```
-Or
+#### From - .from(table name)
 ```js
 majo
   .select()
@@ -138,8 +138,139 @@ majo
   })
   .catch((err) => {
     res.status(500).json(err);
-  })
+  });
 ```
 ```sql
 SELECT * FROM users
+```
+### Aggregates
+The query builder also provides a variety of aggregate methods such as count, max, min,  avg, and sum.
+#### Count - .count(columns, asColumn)
+```js
+majo
+  .table('users')
+  .count()
+  .get()
+  .then((results) => {
+    res.status(200).json(results);
+  })
+  .catch((err) => {
+    res.status(500).json(err);
+  });
+```
+```sql
+SELECT COUNT(*) FROM users
+```
+Or you can **count** as a spesific column like this:
+```js
+majo
+  .table('users')
+  .count('*', 'user_total')
+  .get()
+  .then((results) => {
+    res.status(200).json(results);
+  })
+  .catch((err) => {
+    res.status(500).json(err);
+  });
+```
+```sql
+SELECT COUNT(*) AS user_total FROM users
+```
+Also you can count row with **distinct** method like this:
+```js
+majo
+  .table('users')
+  .countDistinct('id', 'user_total')
+  .get()
+  .then((results) => {
+    res.status(200).json(results);
+  })
+  .catch((err) => {
+    res.status(500).json(err);
+  });
+```
+```sql
+SELECT COUNT(DISTINCT id) FROM users
+```
+#### Avg - .avg(column, asColumn)
+```js
+majo
+  .table('orders')
+  .avg('price')
+  .get()
+  .then((results) => {
+    res.status(200).json(results);
+  })
+  .catch((err) => {
+    res.status(500).json(err);
+  });
+```
+```sql
+SELECT AVG(*) FROM orders
+```
+Or you can get **avg** from spesific column, with combine method.
+```js
+majo
+  .table('orders')
+  .avg('price', 'average_price')
+  .where('status', true)
+  .get()
+  .then((results) => {
+    res.status(200).json(results);
+  })
+  .catch((err) => {
+    res.status(500).json(err);
+  });
+```
+```sql
+SELECT AVG(*) AS average_price FROM orders WHERE status = true
+```
+#### Sum - .sum(column, asColumn)
+```js
+majo
+  .table('orders')
+  .sum('orderId')
+  .get()
+  .then((results) => {
+    res.status(200).json(results);
+  })
+  .catch((err) => {
+    res.status(500).json(err);
+  });
+```
+```sql
+SELECT SUM(orderId) FROM orders
+```
+#### Min - .min(column, asColumn)
+```js
+majo
+  .table('orders')
+  .min('price)
+  .get()
+  .then((results) => {
+    res.status(200).json(results);
+  })
+  .catch((err) => {
+    res.status(500).json(err);
+  });
+```
+```sql
+SELECT MIN(price) FROM orders
+```
+#### Max - .max(column, asColumn)
+```js
+majo
+  .table('orders')
+  .max('price)
+  .get()
+  .then((results) => {
+    res.status(200).json(results);
+  })
+  .catch((err) => {
+    res.status(500).json(err);
+  });
+```
+```sql
+SELECT MAX(price) FROM orders
 ```
