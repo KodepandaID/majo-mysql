@@ -75,6 +75,9 @@ majo
     res.status(500).json(err);
   });
 ```
+```sql
+SELECT * FROM users
+```
 You may not always want to select all columns from a database table. Using the **select** method, you can specify a custom select clause for the query:
 ```js
 majo
@@ -87,6 +90,9 @@ majo
   .catch((err) => {
     res.status(500).json(err);
   });
+```
+```sql
+SELECT name, email AS user_email FROM users
 ```
 The **distinct** method allows you to force the query to return distinct results:
 ```js
@@ -101,7 +107,9 @@ majo
     res.status(500).json(err);
   });
 ```
-
+```sql
+SELECT DISTINCT * FROM users
+```
 #### Select table .from() or .table()
 You use **.table()** or **from()** for selecting spesific table.
 ```js
@@ -116,6 +124,9 @@ majo
     res.status(500).json(err);
   })
 ```
+```sql
+SELECT * FROM users
+```
 Or
 ```js
 majo
@@ -128,4 +139,7 @@ majo
   .catch((err) => {
     res.status(500).json(err);
   })
+```
+```sql
+SELECT * FROM users
 ```
