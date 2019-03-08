@@ -30,9 +30,51 @@ const majo = require('majodb-mysql-builder')
   });
 ```
 
+### Retrieving results
+#### Retrieving All Rows From A Table
+You can get query results as a Array with use **.get()** method.
+```js
+majo
+  .select()
+  .from('users')
+  .get()
+  .then((results) => {
+    res.status(200).json(results);
+  })
+  .catch((err) => {
+    res.status(500).json(err);
+  });
+```
+#### Retrieving A Single Row / Column From A Table
+If you want get single row from query results as Object, you can use **.first()** method.
+```js
+majo
+  .select()
+  .from('users')
+  .first()
+  .then((results) => {
+    res.status(200).json(results);
+  })
+  .catch((err) => {
+    res.status(500).json(err);
+  });
+```
 ### Query Builders
 ### Select
 #### Specifying A Select Clause
+If you want select all columns from a database table.
+```js
+majo
+  .select()
+  .from('users')
+  .get()
+  .then((results) => {
+    res.status(200).json(results);
+  })
+  .catch((err) => {
+    res.status(500).json(err);
+  });
+```
 You may not always want to select all columns from a database table. Using the **select** method, you can specify a custom select clause for the query:
 ```js
 majo
@@ -44,13 +86,41 @@ majo
   })
   .catch((err) => {
     res.status(500).json(err);
-  })
+  });
 ```
 The **distinct** method allows you to force the query to return distinct results:
 ```js
 majo
   .table('users')
   .distinct()
+  .get()
+  .then((results) => {
+    res.status(200).json(results);
+  })
+  .catch((err) => {
+    res.status(500).json(err);
+  });
+```
+
+#### Select table .from() or .table()
+You use **.table()** or **from()** for selecting spesific table.
+```js
+majo
+  .table('users')
+  .select()
+  .get()
+  .then((results) => {
+    res.status(200).json(results);
+  })
+  .catch((err) => {
+    res.status(500).json(err);
+  })
+```
+Or
+```js
+majo
+  .select()
+  .from('users')
   .get()
   .then((results) => {
     res.status(200).json(results);
