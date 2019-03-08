@@ -274,3 +274,139 @@ majo
 ```sql
 SELECT MAX(price) FROM orders
 ```
+### Joins
+The Majo query builder may also be used to write join statements
+#### Inner Join
+```js
+majo
+  .select('users.*', 'contacts.phone')
+  .table('users')
+  .join('contacts', 'users.id', '=', 'contacts.user_id')
+  .get()
+  .then((results) => {
+    res.status(200).json(results);
+  })
+  .catch((err) => {
+    res.status(500).json(err);
+  });
+```
+```sql
+SELECT users.*, contacts.phone FROM users INNER JOIN contacts ON users.id = contacts.user_id
+```
+If you want write it raw, you can use **joinRaw()** method like this:
+```js
+majo
+  .select('users.*', 'contacts.phone')
+  .table('users')
+  .joinRaw('INNER JOIN contacts ON users.id = contacts.user_id')
+  .get()
+  .then((results) => {
+    res.status(200).json(results);
+  })
+  .catch((err) => {
+    res.status(500).json(err);
+  });
+```
+```sql
+SELECT users.*, contacts.phone FROM users INNER JOIN contacts ON users.id = contacts.user_id
+```
+#### Left Join / Right Join
+```js
+majo
+  .select('users.*', 'contacts.phone')
+  .table('users')
+  .leftJoin('contacts', 'users.id', '=', 'contacts.id')
+  .get()
+  .then((results) => {
+    res.status(200).json(results);
+  })
+  .catch((err) => {
+    res.status(500).json(err);
+  });
+```
+```sql
+SELECT users.*, contacts.phone FROM users LEFT JOIN contacts ON users.id = contacts.user_id
+```
+```js
+majo
+  .select('users.*', 'contacts.phone')
+  .table('users')
+  .rightJoin('contacts', 'users.id', '=', 'contacts.id')
+  .get()
+  .then((results) => {
+    res.status(200).json(results);
+  })
+  .catch((err) => {
+    res.status(500).json(err);
+  });
+```
+```sql
+SELECT users.*, contacts.phone FROM users RIGHT JOIN contacts ON users.id = contacts.user_id
+```
+#### Left Outer Join / Right Outer Join
+```js
+majo
+  .select('users.*', 'contacts.phone')
+  .table('users')
+  .leftOuterJoin('contacts', 'users.id', '=', 'contacts.id')
+  .get()
+  .then((results) => {
+    res.status(200).json(results);
+  })
+  .catch((err) => {
+    res.status(500).json(err);
+  });
+```
+```sql
+SELECT users.*, contacts.phone FROM users LEFT OUTER JOIN contacts ON users.id = contacts.user_id
+```
+```js
+majo
+  .select('users.*', 'contacts.phone')
+  .table('users')
+  .rightOuterJoin('contacts', 'users.id', '=', 'contacts.id')
+  .get()
+  .then((results) => {
+    res.status(200).json(results);
+  })
+  .catch((err) => {
+    res.status(500).json(err);
+  });
+```
+```sql
+SELECT users.*, contacts.phone FROM users RIGHT OUTER JOIN contacts ON users.id = contacts.user_id
+```
+#### Full Outer Join
+```js
+majo
+  .select('users.*', 'contacts.phone')
+  .table('users')
+  .fullOuterJoin('contacts', 'users.id', '=', 'contacts.id')
+  .get()
+  .then((results) => {
+    res.status(200).json(results);
+  })
+  .catch((err) => {
+    res.status(500).json(err);
+  });
+```
+```sql
+SELECT users.*, contacts.phone FROM users FULL OUTER JOIN contacts ON users.id = contacts.user_id
+```
+#### Cross Join
+```js
+majo
+  .select('users.*', 'contacts.phone')
+  .table('users')
+  .crossJoin('contacts', 'users.id', '=', 'contacts.id')
+  .get()
+  .then((results) => {
+    res.status(200).json(results);
+  })
+  .catch((err) => {
+    res.status(500).json(err);
+  });
+```
+```sql
+SELECT users.*, contacts.phone FROM users CROSS JOIN contacts ON users.id = contacts.user_id
+```
