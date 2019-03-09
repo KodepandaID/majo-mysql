@@ -29,7 +29,7 @@ addons:
       - mysql-client
 
 before_script:
-  - mysql world < test/sql/world.sql
+  - mysql -u root world < test/sql/world.sql
   
 script:
   - npm run test
