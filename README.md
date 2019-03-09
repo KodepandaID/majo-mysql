@@ -722,3 +722,44 @@ majo
 ```sql
 SELECT * FROM users WHERE last_name NOT NULL OR WHERE first_name != last_name
 ```
+#### Where Exists - .whereExists()
+The **whereExists** method allows you to write where exists SQL clauses. You can write SQL clause with same line without inside block.
+```js
+majo
+  .table('users')
+  .whereExists()
+  .table('orders')
+  .whereColumn('users.id', 'orders.user_id')
+  .endWhereExists()
+  .get()
+  .then((results) => {
+    res.status(200).json(results);
+  })
+  .catch((err) => {
+    res.status(500).json(err);
+  });
+```
+```sql
+SELECT * FROM users WHERE EXISTS ( SELECT * FROM orders WHERE users.id = orders.user_id )
+```
+Remember you should write **endWriteExists** method to end the use of **whereExists** SQL clause.
+#### Where Not Exists - .whereNotExists()
+```js
+majo
+  .table('users')
+  .whereNotExists()
+  .table('orders')
+  .whereColumn('users.id', 'orders.user_id')
+  .endWhereNotExists()
+  .get()
+  .then((results) => {
+    res.status(200).json(results);
+  })
+  .catch((err) => {
+    res.status(500).json(err);
+  });
+```
+```sql
+SELECT * FROM users WHERE NOT EXISTS ( SELECT * FROM orders WHERE users.id = orders.user_id )
+```
+Remember you should write **endWriteNotExists** method to end the use of **whereNotExists** SQL clause.
