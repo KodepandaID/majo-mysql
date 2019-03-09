@@ -1288,7 +1288,13 @@ TRUNCATE TABLE users
 With Majo query builder, you can get all information from your database table like field name, type field and other information.
 ```js
 majo
-  .columnInfo('users');
+  .columnInfo('users')
+  .then((results) => {
+    res.status(200).json(results);
+  })
+  .catch((err) => {
+    res.status(500).json(err);
+  });
 ```
 ```sql
 SHOW COLUMNS FROM users
