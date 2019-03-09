@@ -1123,3 +1123,41 @@ majo
 ```sql
 SELECT * FROM users LIMIT 100 OFFSET 0
 ```
+### Increment & Decrement
+The Majo query builder also provides convenient methods for incrementing or decrementing the value of a given column.
+#### Increment - .increment(column, [number])
+```js
+majo
+  .table('users')
+  .increment('votes');
+```
+```sql
+UPDATE users SET votes = votes + 1
+```
+Or you can custom value like this:
+```js
+majo
+  .table('users')
+  .increment('votes', 10);
+```
+```sql
+UPDATE users SET votes = votes + 10
+```
+#### Decrement - .decrement(column, [number])
+```js
+majo
+  .table('users')
+  .decrement('votes');
+```
+```sql
+UPDATE users SET votes = votes - 1
+```
+Or you can custom value like this:
+```js
+majo
+  .table('users')
+  .decrement('votes', 10);
+```
+```sql
+UPDATE users SET votes = votes - 10
+```
