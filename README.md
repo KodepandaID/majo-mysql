@@ -441,6 +441,19 @@ majo
     res.status(500).json(err);
   });
 ```
+You can write it raw like this:
+```js
+majo
+  .table('users')
+  .whereRaw(`email = 'test@mail.com'`)
+  .get()
+  .then((results) => {
+    res.status(200).json(results);
+  })
+  .catch((err) => {
+    res.status(500).json(err);
+  });
+```
 ```sql
 SELECT * FROM users WHERE email = 'test@mail.com'
 ```
@@ -493,4 +506,53 @@ majo
 ```
 ```sql
 SELECT * FROM users WHERE first_name = 'Yudha' AND last_name = 'Pratama'
+```
+You may also use **Or Where** conditions, use **orWhere** method like this:
+```js
+majo
+  .table('orders')
+  .where('price', '=', 5000)
+  .orWhere('price', '=', 10000)
+  .get()
+  .then((results) => {
+    res.status(200).json(results);
+  })
+  .catch((err) => {
+    res.status(500).json(err);
+  });
+```
+```sql
+SELECT * FROM orders WHERE price = 5000 OR price = 10000
+```
+#### Where In - .whereIn(fieldName, [array] | string | number)
+```js
+majo
+  .table('users')
+  .whereIn([1, 5, 9])
+  .get()
+  .then((results) => {
+    res.status(200).json(results);
+  })
+  .catch((err) => {
+    res.status(500).json(err);
+  });
+```
+```sql
+SELECT * FROM users WHERE id IN (1, 5, 9)
+```
+#### Where Not In - .whereNotIn(fieldName, [array] | string | number)
+```js
+majo
+  .table('users')
+  .whereNotIn([1, 5, 9])
+  .get()
+  .then((results) => {
+    res.status(200).json(results);
+  })
+  .catch((err) => {
+    res.status(500).json(err);
+  });
+```
+```sql
+SELECT * FROM users WHERE id NOT IN (1, 5, 9)
 ```
