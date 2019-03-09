@@ -14,6 +14,9 @@ branches:
 
 cache: npm
 
+before_install:
+  - mysql -e 'CREATE DATABASE IF NOT EXISTS world;'
+  
 install:
   - npm install
 
@@ -26,7 +29,7 @@ addons:
       - mysql-client
 
 before_script:
-  - mysql -u root < test/sql/world.sql
+  - mysql -u root -p world < test/sql/world.sql
   
 script:
   - npm run test
