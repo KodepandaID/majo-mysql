@@ -9,10 +9,11 @@ You can report bugs and discuss features on the [GitHub issues page](https://git
 
 ## Features
 * Full featured query
-* Schema builders (WIP)
 * Expressive method
+* Relationships (WIP)
+* Schema builders (WIP)
 
-## Installation (WIP)
+## Installation
 ```shell
 npm i majodb-mysql-builder
 ```
@@ -59,8 +60,6 @@ majo
     res.status(500).json(err);
   });
 ```
-
-#### Get results with one column
 #### Pluck - .pluck(column)
 If you want get one column for the result, you can use   **.pluck()** method
 ```js
@@ -76,8 +75,9 @@ majo
   });
 ```
 ### Query Builders
-### Select - .select(columns)
-#### Specifying A Select Clause
+
+### Select Clause
+#### Select - .select(columns)
 If you want select all columns from a database table.
 ```js
 majo
