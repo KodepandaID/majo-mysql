@@ -1183,6 +1183,31 @@ majo
 ```sql
 INSERT INTO users (first_name, last_name) VALUES ('Test', 'User')
 ```
+### Updates
+The Majo query builder also provides an **update** method for updating records. The **update** method accepts an object names and values:
+### Update - .update(object | string argument)
+```js
+majo
+  .table('users')
+  .where('user_id', 1)
+  .update({
+    first_name: 'Test',
+    last_name: 'User',
+  });
+```
+```sql
+UPDATE users SET first_name = 'Test', last_name = 'User'
+```
+Or you can write with string argument like this
+```js
+majo
+  .table('users')
+  .where('user_id', 1)
+  .update('first_name', 'Test');
+```
+```sql
+UPDATE users SET first_name = 'Test'
+```
 ### Increment & Decrement
 The Majo query builder also provides convenient methods for incrementing or decrementing the value of a given column.
 #### Increment - .increment(column, [number])
@@ -1220,4 +1245,16 @@ majo
 ```
 ```sql
 UPDATE users SET votes = votes - 10
+```
+### Deletes
+The Majo query builder also provides an **delete** method to remove records from database table.
+#### Delete - .delete()
+```js
+majo
+  .table('users')
+  .where('user_id', 1)
+  .delete();
+```
+```sql
+DELETE FROM users WHERE user_id = 1
 ```
