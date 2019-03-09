@@ -1,0 +1,39 @@
+sudo: true
+dist: trusty
+
+language: node_js
+
+branches:
+  only:
+    - master
+
+before_install:
+  - mysql -u root --password="" < test/sql/world.sql
+
+install:
+  - npm install
+
+script:
+  - npm run test
+
+jobs:
+  include:
+    - stage: test
+      node_js: '8'
+      sudo: required
+      env: MARIADB_VER=mariadb-103 SEQ_MARIADB_PORT=3306 DIALECT=mariadb
+    - stage: test
+      node_js: '9'
+      sudo: required
+      env: MARIADB_VER=mariadb-103 SEQ_MARIADB_PORT=3306 DIALECT=mariadb
+    - stage: test
+      node_js: '10'
+      sudo: required
+      env: MARIADB_VER=mariadb-103 SEQ_MARIADB_PORT=3306 DIALECT=mariadb
+    - stage: test
+      node_js: '11'
+      sudo: required
+      env: MARIADB_VER=mariadb-103 SEQ_MARIADB_PORT=3306 DIALECT=mariadb
+      
+stages:
+  - test
