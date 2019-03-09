@@ -144,7 +144,7 @@ majo
 SELECT * FROM users
 ```
 ### Aggregates
-The query builder also provides a variety of aggregate methods such as count, max, min,  avg, and sum.
+The query builder also provides a variety of aggregate methods such as **count**, **max**, **min**,  **avg**, and **sum**.
 #### Count - .count(columns, asColumn)
 ```js
 majo
@@ -275,8 +275,8 @@ majo
 SELECT MAX(price) FROM orders
 ```
 ### Joins
-The Majo query builder may also be used to write join statements
-#### Inner Join
+The Majo query builder may also be used to write **join** statements
+#### Inner Join - .join(tableName, joinColumn, operator, selectColumn)
 ```js
 majo
   .select('users.*', 'contacts.phone')
@@ -293,6 +293,7 @@ majo
 ```sql
 SELECT users.*, contacts.phone FROM users INNER JOIN contacts ON users.id = contacts.user_id
 ```
+#### Join Raw - .joinRaw(query)
 If you want write it raw, you can use **joinRaw()** method like this:
 ```js
 majo
@@ -310,7 +311,7 @@ majo
 ```sql
 SELECT users.*, contacts.phone FROM users INNER JOIN contacts ON users.id = contacts.user_id
 ```
-#### Left Join / Right Join
+#### Left Join - .leftJoin(tableName, joinColumn, operator, selectColumn)
 ```js
 majo
   .select('users.*', 'contacts.phone')
@@ -327,6 +328,7 @@ majo
 ```sql
 SELECT users.*, contacts.phone FROM users LEFT JOIN contacts ON users.id = contacts.user_id
 ```
+#### Right Join - .rightJoin(tableName, joinColumn, operator, selectColumn)
 ```js
 majo
   .select('users.*', 'contacts.phone')
@@ -343,7 +345,7 @@ majo
 ```sql
 SELECT users.*, contacts.phone FROM users RIGHT JOIN contacts ON users.id = contacts.user_id
 ```
-#### Left Outer Join / Right Outer Join
+#### Left Outer Join - .leftOuterJoin(tableName, joinColumn, operator, selectColumn)
 ```js
 majo
   .select('users.*', 'contacts.phone')
@@ -360,6 +362,7 @@ majo
 ```sql
 SELECT users.*, contacts.phone FROM users LEFT OUTER JOIN contacts ON users.id = contacts.user_id
 ```
+#### Right Outer Join - .rightOuterJoin(tableName, joinColumn, operator, selectColumn)
 ```js
 majo
   .select('users.*', 'contacts.phone')
@@ -376,7 +379,7 @@ majo
 ```sql
 SELECT users.*, contacts.phone FROM users RIGHT OUTER JOIN contacts ON users.id = contacts.user_id
 ```
-#### Full Outer Join
+#### Full Outer Join - .fullOuterJoin(tableName, joinColumn, operator, selectColumn)
 ```js
 majo
   .select('users.*', 'contacts.phone')
@@ -393,7 +396,7 @@ majo
 ```sql
 SELECT users.*, contacts.phone FROM users FULL OUTER JOIN contacts ON users.id = contacts.user_id
 ```
-#### Cross Join
+#### Cross Join - .crossJoin(tableName, joinColumn, operator, selectColumn)
 ```js
 majo
   .select('users.*', 'contacts.phone')
@@ -409,4 +412,85 @@ majo
 ```
 ```sql
 SELECT users.*, contacts.phone FROM users CROSS JOIN contacts ON users.id = contacts.user_id
+```
+### Where Clause
+The Majo query builders may also be used to write **where** statements. The basics style where statements use three arguments, field, operator and value.
+#### Simple where - .where(fieldName, operator, value)
+```js
+majo
+  .table('users')
+  .where('email', '=', 'test@mail.com')
+  .get()
+  .then((results) => {
+    res.status(200).json(results);
+  })
+  .catch((err) => {
+    res.status(500).json(err);
+  });
+```
+You can also without use operator with where statements like this:
+```js
+majo
+  .table('users')
+  .where('email', 'test@mail.com')
+  .get()
+  .then((results) => {
+    res.status(200).json(results);
+  })
+  .catch((err) => {
+    res.status(500).json(err);
+  });
+```
+```sql
+SELECT * FROM users WHERE email = 'test@mail.com'
+```
+You may use a variety of other operators when writing a **where** clause:
+```js
+majo
+  .table('users')
+  .where('email', 'like', '%@gmail.com%')
+  .get()
+  .then((results) => {
+    res.status(200).json(results);
+  })
+  .catch((err) => {
+    res.status(500).json(err);
+  });
+```
+```sql
+SELECT * FROM users WHERE email LIKE '%@gmail.com%'
+```
+```js
+majo
+  .table('orders')
+  .where('price', '>=', 5000)
+  .get()
+  .then((results) => {
+    res.status(200).json(results);
+  })
+  .catch((err) => {
+    res.status(500).json(err);
+  });
+```
+```sql
+SELECT * FROM orders WHERE price >= 5000
+```
+You may also pass an object of conditions to the **where** statement
+```js
+majo
+  .table('users')
+  .where({
+     first_name: 'Yudha',
+     last_name: 'Pratama',
+  })
+  .get()
+  .then((results) => {
+    res.status(200).json(results);
+  })
+  .catch((err) => {
+    res.status(500).json(err);
+  });
+```
+```sql
+SELECT * FROM users WHERE first_name = 'Yudha' AND last_name = 'Pratama'
 ```
