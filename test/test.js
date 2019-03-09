@@ -1,6 +1,6 @@
 const Majo = require('../index').connection({
   host: '127.0.0.1',
-  user: 'majo',
+  user: 'root',
   password: '',
   database: 'world',
 });
