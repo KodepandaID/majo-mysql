@@ -29,7 +29,7 @@ addons:
       - mysql-client
 
 before_script:
-  - mysql -u root -p world < test/sql/world.sql
+  - mysql -u root --password="" world < test/sql/world.sql
   
 script:
   - npm run test
