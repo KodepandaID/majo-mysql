@@ -1123,6 +1123,66 @@ majo
 ```sql
 SELECT * FROM users LIMIT 100 OFFSET 0
 ```
+### Inserts
+The Majo query builder also provides an **insert** method for inserting records into the database table. The **insert** method accepts an object names and values:
+#### Insert - .insert(object | string argument)
+```js
+majo
+  .table('users')
+  .insert({ 
+    first_name: 'Test',
+    last_name: 'User'
+  });
+```
+```sql
+INSERT INTO users (first_name, last_name) VALUES ('Test', 'User')
+```
+Or you can insert with argument like this:
+```js
+majo
+  .table('users')
+  .insert('first_name', 'Test');
+```
+```sql
+INSERT INTO users (first_name) VALUES ('Test')
+```
+You may also want to inserted much values like this:
+```js
+majo
+  .table('users')
+  .insert([
+    {
+      first_name: 'Test',
+      last_name: 'User 1',
+    },
+    {
+      first_name: 'Test',
+      last_name: 'User 2',
+    }
+  ]);
+```
+```sql
+INSERT INTO users (first_name, last_name) VALUES ('Test', 'User 1'), ('Test', 'User 2')
+```
+And then if you want get last inserted id, you can use **insertgetId** method, like this:
+```js
+majo
+  .table('users')
+  .insertGetId({ 
+    first_name: 'Test',
+    last_name: 'User'
+  })
+  .first()
+  .then((results) => {
+    res.status(200).json(results);
+  })
+  .catch((err) => {
+    res.status(500).json(err);
+  });
+```
+```sql
+INSERT INTO users (first_name, last_name) VALUES ('Test', 'User')
+```
 ### Increment & Decrement
 The Majo query builder also provides convenient methods for incrementing or decrementing the value of a given column.
 #### Increment - .increment(column, [number])
