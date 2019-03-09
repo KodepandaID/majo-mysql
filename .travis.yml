@@ -15,7 +15,7 @@ branches:
 cache: npm
 
 before_install:
-  - mysql -e 'CREATE DATABASE IF NOT EXISTS world;'
+  - mysql -e 'CREATE DATABASE IF NOT EXISTS world; GRANT ALL ON *.* TO 'root'@'localhost'; FLUSH PRIVILEGES;'
   
 install:
   - npm install
