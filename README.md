@@ -527,7 +527,7 @@ SELECT * FROM orders WHERE price = 5000 OR price = 10000
 ```js
 majo
   .table('users')
-  .whereIn([1, 5, 9])
+  .whereIn('id', [1, 5, 9])
   .get()
   .then((results) => {
     res.status(200).json(results);
@@ -543,7 +543,7 @@ SELECT * FROM users WHERE id IN (1, 5, 9)
 ```js
 majo
   .table('users')
-  .whereNotIn([1, 5, 9])
+  .whereNotIn('id', [1, 5, 9])
   .get()
   .then((results) => {
     res.status(200).json(results);
