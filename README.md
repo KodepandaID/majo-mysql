@@ -1,5 +1,6 @@
 # MajoDB Mysql
 [![Build Status](https://travis-ci.org/LordAur/majodb-mysql-builder.svg?branch=master)](https://travis-ci.org/LordAur/majodb-mysql-builder)
+[![Dependencies Status](https://david-dm.org/lordaur/majodb-mysql-builder.svg)](https://david-dm.org/lordaur/majodb-mysql-builder)
 > **MajoDB Mysql Builder is query builder with expressive code that makes your day more enjoyable**
 
 You can use this query builder for Mysql and MariaDB then require NodeJS version 8+. 
