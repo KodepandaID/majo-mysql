@@ -46,12 +46,28 @@ majo
   });
 ```
 #### Retrieving A Single Row / Column From A Table
-If you want get single row from query results as Object, you can use **.first()** method.
+If you want get single row from query result as Object, you can use **.first()** method.
 ```js
 majo
   .select()
   .from('users')
   .first()
+  .then((results) => {
+    res.status(200).json(results);
+  })
+  .catch((err) => {
+    res.status(500).json(err);
+  });
+```
+
+#### Get results with one column
+#### Pluck - .pluck(column)
+If you want get one column for the result, you can use   **.pluck()** method
+```js
+majo
+  .select()
+  .from('users')
+  .pluck('email')
   .then((results) => {
     res.status(200).json(results);
   })
@@ -1257,4 +1273,23 @@ majo
 ```
 ```sql
 DELETE FROM users WHERE user_id = 1
+```
+#### Truncate - .truncate(table)
+If you want clear the data from your database table, you can use **truncate** method.
+```js
+majo
+  .truncate('users')
+```
+```sql
+TRUNCATE TABLE users
+```
+### Another Methods
+#### Column Info
+With Majo query builder, you can get all information from your database table like field name, type field and other information.
+```js
+majo
+  .columnInfo('users');
+```
+```sql
+SHOW COLUMNS FROM users
 ```
