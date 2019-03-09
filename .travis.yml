@@ -8,7 +8,7 @@ branches:
     - master
 
 before_install:
-  - mysql -u root --password="" < test/sql/world.sql
+  - mysql -u root --password="" < ./test/sql/world.sql
 
 install:
   - npm install
