@@ -1,5 +1,7 @@
 sudo: true
 dist: trusty
+services:
+  - mysql
 language: node_js
 node_js:
   - "8"
@@ -12,12 +14,6 @@ branches:
 
 cache: npm
 
-services:
-  - mysql
-  
-before_script:
-  - mysql -u root < test/sql/world.sql
-
 install:
   - npm install
 
@@ -29,6 +25,9 @@ addons:
       - mysql-server
       - mysql-client
 
+before_script:
+  - mysql -u root < test/sql/world.sql
+  
 script:
   - npm run test
       
