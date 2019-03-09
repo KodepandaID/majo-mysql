@@ -415,7 +415,7 @@ SELECT users.*, contacts.phone FROM users CROSS JOIN contacts ON users.id = cont
 ```
 ### Where Clause
 The Majo query builders may also be used to write **where** statements. The basics style where statements use three arguments, field, operator and value.
-#### Simple where - .where(fieldName, operator, value)
+#### Simple where - .where(column, operator, value)
 ```js
 majo
   .table('users')
@@ -524,7 +524,7 @@ majo
 ```sql
 SELECT * FROM orders WHERE price = 5000 OR price = 10000
 ```
-#### Where In - .whereIn(fieldName, [array] | string | number)
+#### Where In - .whereIn(column, [array] | string | number)
 ```js
 majo
   .table('users')
@@ -540,7 +540,7 @@ majo
 ```sql
 SELECT * FROM users WHERE id IN (1, 5, 9)
 ```
-#### Where Not In - .whereNotIn(fieldName, [array] | string | number)
+#### Where Not In - .whereNotIn(column, [array] | string | number)
 ```js
 majo
   .table('users')
@@ -556,7 +556,7 @@ majo
 ```sql
 SELECT * FROM users WHERE id NOT IN (1, 5, 9)
 ```
-#### Where Null - .whereNull(fieldName)
+#### Where Null - .whereNull(column)
 ```js
 majo
   .table('users')
@@ -572,7 +572,7 @@ majo
 ```sql
 SELECT * FROM users WHERE last_name IS NULL
 ```
-#### Where Not Null - .whereNotNull(fieldName)
+#### Where Not Null - .whereNotNull(column)
 ```js
 majo
   .table('users')
@@ -588,7 +588,7 @@ majo
 ```sql
 SELECT * FROM users WHERE last_name IS NOT NULL
 ```
-#### Where Empty String - .whereEmptyString(fieldName)
+#### Where Empty String - .whereEmptyString(column)
 ```js
 majo
   .table('users')
@@ -604,7 +604,7 @@ majo
 ```sql
 SELECT * FROM users WHERE last_name = ''
 ```
-#### Where Between - .whereBetween(fieldName, startNumber, endNumber)
+#### Where Between - .whereBetween(column, startNumber, endNumber)
 ```js
 majo
   .table('orders')
@@ -620,7 +620,7 @@ majo
 ```sql
 SELECT * FROM orders WHERE price BETWEEN 5000 AND 10000
 ```
-#### Where Not Between - .whereNotBetween(fieldName, startNumber, endNumber)
+#### Where Not Between - .whereNotBetween(column, startNumber, endNumber)
 ```js
 majo
   .table('orders')
@@ -742,7 +742,7 @@ majo
 ```sql
 SELECT * FROM users WHERE EXISTS ( SELECT * FROM orders WHERE users.id = orders.user_id )
 ```
-Remember you should write **endWriteExists** method to end the use of **whereExists** SQL clause.
+Remember you should write **endWhereExists** method to end the use of **whereExists** SQL clause.
 #### Where Not Exists - .whereNotExists()
 ```js
 majo
@@ -762,11 +762,11 @@ majo
 ```sql
 SELECT * FROM users WHERE NOT EXISTS ( SELECT * FROM orders WHERE users.id = orders.user_id )
 ```
-Remember you should write **endWriteNotExists** method to end the use of **whereNotExists** SQL clause.
+Remember you should write **endWhereNotExists** method to end the use of **whereNotExists** SQL clause.
 
 ### Ordering, Grouping, Limit & Offset
 The Majo query builders may also be used to write **order by**, **group by**, **offset** and **limit** statement.
-#### Order By - .orderBy(fieldName, [by clause])
+#### Order By - .orderBy(column, [by clause])
 ```js
 majo
   .table('users')
@@ -811,7 +811,7 @@ majo
 ```sql
 SELECT * FROM users ORDER BY created_date ASC
 ```
-#### Order By Desc - .orderByDesc(fieldName)
+#### Order By Desc - .orderByDesc(column)
 ```js
 majo
   .table('users')
@@ -827,7 +827,7 @@ majo
 ```sql
 SELECT * FROM users ORDER BY created_date DESC
 ```
-#### Latest - .latest(fieldName)
+#### Latest - .latest(column)
 You can use **latest** method without any argument. The **latest** method argument by default is **created_date**
 ```js
 majo
@@ -844,7 +844,7 @@ majo
 ```sql
 SELECT * FROM users ORDER BY created_date DESC
 ```
-#### Oldest - .oldest(fieldName)
+#### Oldest - .oldest(column)
 You can use **oldest** method without any argument. The **oldest** method argument by default is **created_date**
 ```js
 majo
@@ -861,7 +861,7 @@ majo
 ```sql
 SELECT * FROM users ORDER BY created_date ASC
 ```
-#### Group By - .groupBy(fields)
+#### Group By - .groupBy(columns)
 ```js
 majo
   .table('orders')
@@ -904,4 +904,222 @@ majo
 ```
 ```sql
 SELECT * FROM orders GROUP BY status, created_date
+```
+### Having Clause
+The Majo query builders may also be used to write **having** method. Having clause used to search keywords with aggregates
+#### Having - .having(column, [operator], value)
+```sql
+majo
+  .table('orders')
+  .groupBy('price')
+  .having('price', 5000)
+  .get()
+  .then((results) => {
+    res.status(200).json(results);
+  })
+  .catch((err) => {
+    res.status(500).json(err);
+  });
+```
+```sql
+SELECT * FROM orders GROUP BY price HAVING price = 5000
+```
+Or you can uuse **having** method without operator, like this:
+```sql
+majo
+  .table('orders')
+  .groupBy('price')
+  .having('price', '>', 5000)
+  .get()
+  .then((results) => {
+    res.status(200).json(results);
+  })
+  .catch((err) => {
+    res.status(500).json(err);
+  });
+```
+```sql
+SELECT * FROM orders GROUP BY price HAVING price > 5000
+```
+#### Having In - .havingIn(column, values)
+```sql
+majo
+  .table('orders')
+  .groupBy('price')
+  .havingIn('price', [5000, 1000])
+  .get()
+  .then((results) => {
+    res.status(200).json(results);
+  })
+  .catch((err) => {
+    res.status(500).json(err);
+  });
+```
+```sql
+SELECT * FROM orders GROUP BY price HAVING price IN (5000, 1000)
+```
+#### Having Not In - .havingNotIn(column, values)
+```sql
+majo
+  .table('orders')
+  .groupBy('price')
+  .havingNotIn('price', [5000, 1000])
+  .get()
+  .then((results) => {
+    res.status(200).json(results);
+  })
+  .catch((err) => {
+    res.status(500).json(err);
+  });
+```
+```sql
+SELECT * FROM orders GROUP BY price HAVING price NOT IN (5000, 1000)
+```
+#### Having Null - .havingNull(column)
+```sql
+majo
+  .table('orders')
+  .groupBy('price')
+  .havingNull('client_name')
+  .get()
+  .then((results) => {
+    res.status(200).json(results);
+  })
+  .catch((err) => {
+    res.status(500).json(err);
+  });
+```
+```sql
+SELECT * FROM orders GROUP BY price HAVING client_name IS NULL
+```
+#### Having Not Null - .havingNotNull(column)
+```sql
+majo
+  .table('orders')
+  .groupBy('price')
+  .havingNotNull('client_name')
+  .get()
+  .then((results) => {
+    res.status(200).json(results);
+  })
+  .catch((err) => {
+    res.status(500).json(err);
+  });
+```
+```sql
+SELECT * FROM orders GROUP BY price HAVING client_name IS NOT NULL
+```
+#### Having Between - .havingBetween(column, values)
+```sql
+majo
+  .table('orders')
+  .groupBy('price')
+  .havingBetween('price', [5000, 1000])
+  .get()
+  .then((results) => {
+    res.status(200).json(results);
+  })
+  .catch((err) => {
+    res.status(500).json(err);
+  });
+```
+```sql
+SELECT * FROM orders GROUP BY price HAVING price BETWEEN 5000 AND 10000
+```
+#### Having Not Between - .havingNotBetween(column, values)
+```sql
+majo
+  .table('orders')
+  .groupBy('price')
+  .havingNotBetween('price', [5000, 10000])
+  .get()
+  .then((results) => {
+    res.status(200).json(results);
+  })
+  .catch((err) => {
+    res.status(500).json(err);
+  });
+```
+```sql
+SELECT * FROM orders GROUP BY price HAVING price NOT BETWEEN 5000 AND 10000
+```
+#### Having Exists - .havingExists()
+The **havingExists** method allows you to write having exists SQL clauses. You can write SQL clause with same line without inside block.
+```js
+majo
+  .table('users')
+  .groupBy('id')
+  .havingExists()
+  .table('orders')
+  .whereColumn('users.id', 'orders.user_id')
+  .endHavingExists()
+  .get()
+  .then((results) => {
+    res.status(200).json(results);
+  })
+  .catch((err) => {
+    res.status(500).json(err);
+  });
+```
+```sql
+SELECT * FROM users GROUP BY id HAVING EXISTS ( SELECT * FROM orders WHERE users.id = orders.user_id )
+```
+Remember you should write **endHavingExists** method to end the use of **havingExists** SQL clause.
+#### Having Not Exists - .havingNotExists()
+```js
+majo
+  .table('users')
+  .groupBy('id')
+  .havingNotExists()
+  .table('orders')
+  .whereColumn('users.id', 'orders.user_id')
+  .endHavingExists()
+  .get()
+  .then((results) => {
+    res.status(200).json(results);
+  })
+  .catch((err) => {
+    res.status(500).json(err);
+  });
+```
+```sql
+SELECT * FROM users GROUP BY id HAVING NOT EXISTS ( SELECT * FROM orders WHERE users.id = orders.user_id )
+```
+Remember you should write **endHavingNotExists** method to end the use of **havingNotExists** SQL clause.
+
+### Offset & Limit
+The Majo query builder may be used to **offset** and **limit** statement.
+#### Offset - .offset(number) And Limit - .limit(number)
+```js
+majo
+  .table('users')
+  .limit(100)
+  .offset(0)
+  .get()
+  .then((results) => {
+    res.status(200).json(results);
+  })
+  .catch((err) => {
+    res.status(500).json(err);
+  });
+```
+```sql
+SELECT * FROM users LIMIT 100 OFFSET 0
+```
+Or you can use **skip** for change **offset** method, and use **take** for change **limit** method.
+```js
+majo
+  .table('users')
+  .take(100)
+  .skip(0)
+  .get()
+  .then((results) => {
+    res.status(200).json(results);
+  })
+  .catch((err) => {
+    res.status(500).json(err);
+  });
+```
+```sql
+SELECT * FROM users LIMIT 100 OFFSET 0
 ```
