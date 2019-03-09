@@ -395,23 +395,6 @@ majo
 ```sql
 SELECT users.*, contacts.phone FROM users RIGHT OUTER JOIN contacts ON users.id = contacts.user_id
 ```
-#### Full Outer Join - .fullOuterJoin(tableName, joinColumn, operator, selectColumn)
-```js
-majo
-  .select('users.*', 'contacts.phone')
-  .table('users')
-  .fullOuterJoin('contacts', 'users.id', '=', 'contacts.id')
-  .get()
-  .then((results) => {
-    res.status(200).json(results);
-  })
-  .catch((err) => {
-    res.status(500).json(err);
-  });
-```
-```sql
-SELECT users.*, contacts.phone FROM users FULL OUTER JOIN contacts ON users.id = contacts.user_id
-```
 #### Cross Join - .crossJoin(tableName, joinColumn, operator, selectColumn)
 ```js
 majo
@@ -544,7 +527,7 @@ SELECT * FROM orders WHERE price = 5000 OR price = 10000
 ```js
 majo
   .table('users')
-  .whereIn([1, 5, 9])
+  .whereIn('id', [1, 5, 9])
   .get()
   .then((results) => {
     res.status(200).json(results);
@@ -560,7 +543,7 @@ SELECT * FROM users WHERE id IN (1, 5, 9)
 ```js
 majo
   .table('users')
-  .whereNotIn([1, 5, 9])
+  .whereNotIn('id', [1, 5, 9])
   .get()
   .then((results) => {
     res.status(200).json(results);
@@ -940,7 +923,7 @@ majo
 ```sql
 SELECT * FROM orders GROUP BY price HAVING price = 5000
 ```
-Or you can uuse **having** method without operator, like this:
+Or you can use **having** method without operator, like this:
 ```sql
 majo
   .table('orders')
