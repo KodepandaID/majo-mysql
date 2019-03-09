@@ -923,7 +923,7 @@ majo
 ```sql
 SELECT * FROM orders GROUP BY price HAVING price = 5000
 ```
-Or you can uuse **having** method without operator, like this:
+Or you can use **having** method without operator, like this:
 ```sql
 majo
   .table('orders')
