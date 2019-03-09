@@ -4,7 +4,7 @@
   "description": "MajoDB Mysql Builder is query builder with expressive code that makes your day more enjoyable.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha --timeout 30000"
   },
   "keywords": [
     "sql",
@@ -31,7 +31,8 @@
   "devDependencies": {
     "eslint": "^5.15.0",
     "eslint-config-airbnb-base": "^13.1.0",
-    "eslint-plugin-import": "^2.16.0"
+    "eslint-plugin-import": "^2.16.0",
+    "mocha": "^6.0.2"
   },
   "dependencies": {
     "mysql2": "^1.6.5"
