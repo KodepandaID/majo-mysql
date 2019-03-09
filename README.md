@@ -507,7 +507,7 @@ majo
 ```sql
 SELECT * FROM users WHERE first_name = 'Yudha' AND last_name = 'Pratama'
 ```
-You may also use **Or Where** conditions, use **orWhere** method like this:
+You may be used **Or Where** conditions and used **orWhere** method like this:
 ```js
 majo
   .table('orders')
@@ -555,4 +555,170 @@ majo
 ```
 ```sql
 SELECT * FROM users WHERE id NOT IN (1, 5, 9)
+```
+#### Where Null - .whereNull(fieldName)
+```js
+majo
+  .table('users')
+  .whereNull('last_name')
+  .get()
+  .then((results) => {
+    res.status(200).json(results);
+  })
+  .catch((err) => {
+    res.status(500).json(err);
+  });
+```
+```sql
+SELECT * FROM users WHERE last_name IS NULL
+```
+#### Where Not Null - .whereNotNull(fieldName)
+```js
+majo
+  .table('users')
+  .whereNotNull('last_name')
+  .get()
+  .then((results) => {
+    res.status(200).json(results);
+  })
+  .catch((err) => {
+    res.status(500).json(err);
+  });
+```
+```sql
+SELECT * FROM users WHERE last_name IS NOT NULL
+```
+#### Where Empty String - .whereEmptyString(fieldName)
+```js
+majo
+  .table('users')
+  .whereEmptyString('last_name')
+  .get()
+  .then((results) => {
+    res.status(200).json(results);
+  })
+  .catch((err) => {
+    res.status(500).json(err);
+  });
+```
+```sql
+SELECT * FROM users WHERE last_name = ''
+```
+#### Where Between - .whereBetween(fieldName, startNumber, endNumber)
+```js
+majo
+  .table('orders')
+  .whereBetween('price', 5000, 10000)
+  .get()
+  .then((results) => {
+    res.status(200).json(results);
+  })
+  .catch((err) => {
+    res.status(500).json(err);
+  });
+```
+```sql
+SELECT * FROM orders WHERE price BETWEEN 5000 AND 10000
+```
+#### Where Not Between - .whereNotBetween(fieldName, startNumber, endNumber)
+```js
+majo
+  .table('orders')
+  .whereNotBetween('price', 5000, 10000)
+  .get()
+  .then((results) => {
+    res.status(200).json(results);
+  })
+  .catch((err) => {
+    res.status(500).json(err);
+  });
+```
+```sql
+SELECT * FROM orders WHERE price NOT BETWEEN 5000 AND 10000
+```
+You may be used **whereBetwwen** method and **whereNotBetween** with OR statement like this
+```js
+majo
+  .table('orders')
+  .whereNotBetween('price', 1000, 2000)
+  .whereNotBetween('price', 5000, 10000)
+  .get()
+  .then((results) => {
+    res.status(200).json(results);
+  })
+  .catch((err) => {
+    res.status(500).json(err);
+  });
+```
+```sql
+SELECT * FROM orders WHERE price NOT BETWEEN 1000 AND 2000 OR price NOT BETWEEN 5000 AND 10000
+```
+#### Where Column - .whereColumn(firstColumn, operator, secondColumn)
+The **whereColumn** method may be used to verify that two columns are equal
+```js
+majo
+ .table('users')
+ .whereColumn('first_name', 'last_name')
+ .get()
+  .then((results) => {
+    res.status(200).json(results);
+  })
+  .catch((err) => {
+    res.status(500).json(err);
+  });
+```
+```sql
+SELECT * FROM users WHERE first_name = last_name
+```
+Or you can use with operator like this:
+```js
+majo
+ .table('users')
+ .whereColumn('first_name', '!=' 'last_name')
+ .get()
+  .then((results) => {
+    res.status(200).json(results);
+  })
+  .catch((err) => {
+    res.status(500).json(err);
+  });
+```
+```sql
+SELECT * FROM users WHERE first_name != last_name
+```
+Or used much columns checking
+```js
+majo
+ .table('users')
+ .whereColumn({
+  first_name: 'last_name',
+  username: 'email'
+ })
+ .get()
+  .then((results) => {
+    res.status(200).json(results);
+  })
+  .catch((err) => {
+    res.status(500).json(err);
+  });
+```
+```sql
+SELECT * FROM users WHERE first_name = last_name AND username = email
+```
+You may be used **whereColumn** methid with OR statement like this:
+```js
+majo
+ .table('users')
+ .whereNotNull('last_name')
+ .orWhereColumn('first_name', '!=' 'last_name')
+ .get()
+  .then((results) => {
+    res.status(200).json(results);
+  })
+  .catch((err) => {
+    res.status(500).json(err);
+  });
+```
+```sql
+SELECT * FROM users WHERE last_name NOT NULL OR WHERE first_name != last_name
 ```
