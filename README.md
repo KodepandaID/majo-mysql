@@ -763,3 +763,101 @@ majo
 SELECT * FROM users WHERE NOT EXISTS ( SELECT * FROM orders WHERE users.id = orders.user_id )
 ```
 Remember you should write **endWriteNotExists** method to end the use of **whereNotExists** SQL clause.
+
+### Ordering, Grouping, Limit & Offset
+The Majo query builders may also be used to write **order by**, **group by**, **offset** and **limit** statement.
+#### Order By - .orderBy(fieldName, [by clause])
+```js
+majo
+  .table('users')
+  .orderBy('created_date')
+  .get()
+  .then((results) => {
+    res.status(200).json(results);
+  })
+  .catch((err) => {
+    res.status(500).json(err);
+  });
+```
+Or you can use by clause like this
+```js
+majo
+  .table('users')
+  .orderBy('created_date', 'ASC')
+  .get()
+  .then((results) => {
+    res.status(200).json(results);
+  })
+  .catch((err) => {
+    res.status(500).json(err);
+  });
+```
+```sql
+SELECT * FROM users ORDER BY created_date ASC
+```
+You can write it raw like this:
+```js
+majo
+  .table('users')
+  .orderByRaw('created_date ASC')
+  .get()
+  .then((results) => {
+    res.status(200).json(results);
+  })
+  .catch((err) => {
+    res.status(500).json(err);
+  });
+```
+```sql
+SELECT * FROM users ORDER BY created_date ASC
+```
+#### Order By Desc - .orderByDesc(fieldName)
+```js
+majo
+  .table('users')
+  .orderByDesc('created_date')
+  .get()
+  .then((results) => {
+    res.status(200).json(results);
+  })
+  .catch((err) => {
+    res.status(500).json(err);
+  });
+```
+```sql
+SELECT * FROM users ORDER BY created_date DESC
+```
+#### Latest - .latest(fieldName)
+You can use **latest** method without any argument. The **latest** method argument by default is **created_date**
+```js
+majo
+  .table('users')
+  .latest('created_date')
+  .get()
+  .then((results) => {
+    res.status(200).json(results);
+  })
+  .catch((err) => {
+    res.status(500).json(err);
+  });
+```
+```sql
+SELECT * FROM users ORDER BY created_date DESC
+```
+#### Oldest - .oldest(fieldName)
+You can use **oldest** method without any argument. The **oldest** method argument by default is **created_date**
+```js
+majo
+  .table('users')
+  .oldest('created_date')
+  .get()
+  .then((results) => {
+    res.status(200).json(results);
+  })
+  .catch((err) => {
+    res.status(500).json(err);
+  });
+```
+```sql
+SELECT * FROM users ORDER BY created_date ASC
+```
