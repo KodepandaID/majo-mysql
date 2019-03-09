@@ -395,23 +395,6 @@ majo
 ```sql
 SELECT users.*, contacts.phone FROM users RIGHT OUTER JOIN contacts ON users.id = contacts.user_id
 ```
-#### Full Outer Join - .fullOuterJoin(tableName, joinColumn, operator, selectColumn)
-```js
-majo
-  .select('users.*', 'contacts.phone')
-  .table('users')
-  .fullOuterJoin('contacts', 'users.id', '=', 'contacts.id')
-  .get()
-  .then((results) => {
-    res.status(200).json(results);
-  })
-  .catch((err) => {
-    res.status(500).json(err);
-  });
-```
-```sql
-SELECT users.*, contacts.phone FROM users FULL OUTER JOIN contacts ON users.id = contacts.user_id
-```
 #### Cross Join - .crossJoin(tableName, joinColumn, operator, selectColumn)
 ```js
 majo
