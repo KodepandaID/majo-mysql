@@ -7,11 +7,11 @@ branches:
   only:
     - master
 
-before_install:
-  - mysql -u root --password="" < ./test/sql/world.sql
-
 install:
   - npm install
+
+before_script:
+  - mysql -u root < test/sql/world.sql
 
 script:
   - npm run test
