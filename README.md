@@ -861,3 +861,47 @@ majo
 ```sql
 SELECT * FROM users ORDER BY created_date ASC
 ```
+#### Group By - .groupBy(fields)
+```js
+majo
+  .table('orders')
+  .groupBy('status')
+  .get()
+  .then((results) => {
+    res.status(200).json(results);
+  })
+  .catch((err) => {
+    res.status(500).json(err);
+  });
+```
+```sql
+SELECT * FROM orders GROUP BY status
+```
+Or you can use much fields for grouping like this
+```js
+majo
+  .table('orders')
+  .groupBy('status', 'created_date')
+  .get()
+  .then((results) => {
+    res.status(200).json(results);
+  })
+  .catch((err) => {
+    res.status(500).json(err);
+  });
+```
+```js
+majo
+  .table('orders')
+  .groupByRaw('status, created_date')
+  .get()
+  .then((results) => {
+    res.status(200).json(results);
+  })
+  .catch((err) => {
+    res.status(500).json(err);
+  });
+```
+```sql
+SELECT * FROM orders GROUP BY status, created_date
+```
