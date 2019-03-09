@@ -16,7 +16,8 @@ cache: npm
 
 before_install:
   - mysql -e "CREATE DATABASE IF NOT EXISTS world;"
-  - mysql -e "GRANT ALL ON *.* TO 'root'@'localhost';"
+  - mysql -e "CREATE USER 'majo'@'localhost';"
+  - mysql -e "GRANT ALL ON *.* TO 'majo'@'localhost';"
   - mysql -e "FLUSH PRIVILEGES;"
 
 install:
