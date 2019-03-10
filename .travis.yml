@@ -22,6 +22,7 @@ before_install:
 
 install:
   - npm install
+  - npm install --save-dev
 
 addons:
   apt:
@@ -34,10 +35,8 @@ addons:
 before_script:
   - mysql -u root world < test/sql/world.sql
 
-after_script: NODE_ENV=nyc npm test && nyc report --reporter=text-lcov | coveralls
-
 script:
-  - npm test
+  - npm run coverage
 
 stages:
   - test
