@@ -802,6 +802,31 @@ describe('Testing Query Builder', () => {
       });
   });
 
+  it('insert() method with array object value', (done) => {
+    Majo
+      .table('city')
+      .insert([
+        {
+          Name: 'TestArray1',
+          CountryCode: 'USA',
+          District: 'Test',
+          Population: 1000,
+        },
+        {
+          Name: 'TestArray2',
+          CountryCode: 'USA',
+          District: 'Test',
+          Population: 1000,
+        },
+      ])
+      .then(() => {
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+
   it('insertGetId() method', (done) => {
     Majo
       .table('city')
