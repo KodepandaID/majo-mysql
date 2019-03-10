@@ -101,6 +101,19 @@ describe('Testing Query Builder', () => {
   it('countDistinct() method', (done) => {
     Majo
       .table('city')
+      .countDistinct('CountryCode')
+      .get()
+      .then(() => {
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+
+  it('countDistinct() method with as a spesific column', (done) => {
+    Majo
+      .table('city')
       .countDistinct('CountryCode', 'total_city')
       .get()
       .then(() => {
@@ -150,6 +163,19 @@ describe('Testing Query Builder', () => {
       });
   });
 
+  it('sum() method with as a spesific column', (done) => {
+    Majo
+      .table('city')
+      .sum('Population', 'total_population')
+      .get()
+      .then(() => {
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+
   it('min() method', (done) => {
     Majo
       .table('city')
@@ -163,10 +189,36 @@ describe('Testing Query Builder', () => {
       });
   });
 
+  it('min() method with as a spesific column', (done) => {
+    Majo
+      .table('city')
+      .min('Population', 'total_minimal_population')
+      .get()
+      .then(() => {
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+
   it('max() method', (done) => {
     Majo
       .table('city')
       .max('Population')
+      .get()
+      .then(() => {
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+
+  it('max() method with as a spesific column', (done) => {
+    Majo
+      .table('city')
+      .max('Population', 'total_max_column')
       .get()
       .then(() => {
         done();
@@ -190,11 +242,39 @@ describe('Testing Query Builder', () => {
       });
   });
 
+  it('join() method with custom join type', (done) => {
+    Majo
+      .select('city.*', 'country.Continent')
+      .from('city')
+      .join('country', 'city.CountryCode', '=', 'country.Code', 'left')
+      .get()
+      .then(() => {
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+
   it('joinRaw() method', (done) => {
     Majo
       .select('city.*', 'country.Continent')
       .from('city')
       .joinRaw('INNER JOIN country ON city.CountryCode = country.Code')
+      .get()
+      .then(() => {
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+
+  it('innerJoin() method', (done) => {
+    Majo
+      .select('city.*', 'country.Continent')
+      .from('city')
+      .innerJoin('country', 'city.CountryCode', '=', 'country.Code')
       .get()
       .then(() => {
         done();
@@ -300,6 +380,19 @@ describe('Testing Query Builder', () => {
       });
   });
 
+  it('where() method with not available operator', (done) => {
+    Majo
+      .table('city')
+      .where('Name', 'look', 'Kabul')
+      .get()
+      .then(() => {
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+
   it('where() method with like operator', (done) => {
     Majo
       .table('city')
@@ -326,12 +419,174 @@ describe('Testing Query Builder', () => {
       });
   });
 
-  it('where() method with object argument', (done) => {
+  it('orWhere() method', (done) => {
     Majo
       .table('city')
       .where({
         Name: 'Kabul',
         CountryCode: 'AFG',
+      })
+      .orWhere('CountryCode', 'PSE')
+      .get()
+      .then(() => {
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+
+  it('orWhere() method with operator', (done) => {
+    Majo
+      .table('city')
+      .where({
+        Name: 'Kabul',
+        CountryCode: 'AFG',
+      })
+      .orWhere('Population', '>', 80000)
+      .get()
+      .then(() => {
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+
+  it('orWhere() method with not available operator', (done) => {
+    Majo
+      .table('city')
+      .where({
+        Name: 'Kabul',
+        CountryCode: 'AFG',
+      })
+      .orWhere('Population', 'look', 80000)
+      .get()
+      .then(() => {
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+
+  it('orWhere() method with object argument', (done) => {
+    Majo
+      .table('city')
+      .where({
+        Name: 'Kabul',
+        CountryCode: 'AFG',
+      })
+      .orWhere({
+        Name: 'Gaza',
+        CountryCode: 'PSE',
+      })
+      .get()
+      .then(() => {
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+
+  it('orWhere() method with object argument', (done) => {
+    Majo
+      .table('city')
+      .where({
+        Name: 'Kabul',
+        CountryCode: 'AFG',
+      })
+      .orWhere({
+        Name: 'Gaza',
+        CountryCode: 'PSE',
+      })
+      .get()
+      .then(() => {
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+
+  it('orWhereBetween() method', (done) => {
+    Majo
+      .table('city')
+      .where({
+        Name: 'Kabul',
+        CountryCode: 'AFG',
+      })
+      .orWhereBetween('Population', 80000, 1270000)
+      .get()
+      .then(() => {
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+
+  it('orWhereNotBetween() method', (done) => {
+    Majo
+      .table('city')
+      .where({
+        Name: 'Kabul',
+        CountryCode: 'AFG',
+      })
+      .orWhereNotBetween('Population', 80000, 1270000)
+      .get()
+      .then(() => {
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+
+  it('orWhereColumn() method', (done) => {
+    Majo
+      .table('city')
+      .where({
+        Name: 'Kabul',
+        CountryCode: 'AFG',
+      })
+      .orWhereColumn('Name', 'District')
+      .get()
+      .then(() => {
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+
+  it('orWhereColumn() method with operator', (done) => {
+    Majo
+      .table('city')
+      .where({
+        Name: 'Kabul',
+        CountryCode: 'AFG',
+      })
+      .orWhereColumn('Name', '!=', 'District')
+      .get()
+      .then(() => {
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+
+  it('orWhereColumn() method with object', (done) => {
+    Majo
+      .table('country')
+      .where({
+        Name: 'Aruba',
+      })
+      .orWhereColumn({
+        Name: 'Continent',
+        Continent: 'Region',
       })
       .get()
       .then(() => {
@@ -355,6 +610,58 @@ describe('Testing Query Builder', () => {
       });
   });
 
+  it('whereIn() method with array string', (done) => {
+    Majo
+      .table('city')
+      .whereIn('CountryCode', ['USA', 'PSE'])
+      .get()
+      .then(() => {
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+
+  it('whereIn() method with string value', (done) => {
+    Majo
+      .table('city')
+      .whereIn('CountryCode', 'USA')
+      .get()
+      .then(() => {
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+
+  it('whereIn() method with number value', (done) => {
+    Majo
+      .table('city')
+      .whereIn('Population', 127800)
+      .get()
+      .then(() => {
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+
+  it('whereIn() method with null value', (done) => {
+    Majo
+      .table('country')
+      .whereIn('GNP', null)
+      .get()
+      .then(() => {
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+
   it('whereNotIn() method', (done) => {
     Majo
       .table('city')
@@ -368,10 +675,75 @@ describe('Testing Query Builder', () => {
       });
   });
 
+  it('whereNotIn() method with array string', (done) => {
+    Majo
+      .table('city')
+      .whereNotIn('CountryCode', ['USA', 'PSE'])
+      .get()
+      .then(() => {
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+
+  it('whereNotIn() method with string value', (done) => {
+    Majo
+      .table('city')
+      .whereNotIn('CountryCode', 'USA')
+      .get()
+      .then(() => {
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+
+  it('whereNotIn() method with number value', (done) => {
+    Majo
+      .table('city')
+      .whereNotIn('Population', 127800)
+      .get()
+      .then(() => {
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+
+  it('whereNotIn() method with null value', (done) => {
+    Majo
+      .table('country')
+      .whereNotIn('GNP', null)
+      .get()
+      .then(() => {
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+
   it('whereNull() method', (done) => {
     Majo
       .table('country')
       .whereNull('GNP')
+      .get()
+      .then(() => {
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+
+  it('whereNotNull() method', (done) => {
+    Majo
+      .table('country')
+      .whereNotNull('GNP')
       .get()
       .then(() => {
         done();
@@ -470,6 +842,22 @@ describe('Testing Query Builder', () => {
       .whereColumn('city.CountryCode', 'country.Code')
       .endWhereExists()
       .get()
+      .then(() => {
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+
+  it('whereExists() method with first results', (done) => {
+    Majo
+      .table('city')
+      .whereExists()
+      .table('country')
+      .whereColumn('city.CountryCode', 'country.Code')
+      .endWhereExists()
+      .first()
       .then(() => {
         done();
       })
@@ -810,7 +1198,6 @@ describe('Testing Query Builder', () => {
           Name: 'TestArray1',
           CountryCode: 'USA',
           District: 'Test',
-          Population: 1000,
         },
         {
           Name: 'TestArray2',
@@ -844,11 +1231,24 @@ describe('Testing Query Builder', () => {
       });
   });
 
-  it('update() method', (done) => {
+  it('update() method with value number', (done) => {
     Majo
       .table('city')
       .where('Name', 'Test')
       .update('Population', 5000)
+      .then(() => {
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+
+  it('update() method with value string', (done) => {
+    Majo
+      .table('city')
+      .where('Name', 'Test')
+      .update('District', 'TestDistrict')
       .then(() => {
         done();
       })
