@@ -785,7 +785,7 @@ describe('Testing Query Builder', () => {
       });
   });
 
-  it('insert() method', (done) => {
+  it('insert() method with object value', (done) => {
     Majo
       .table('city')
       .insert({
@@ -832,6 +832,22 @@ describe('Testing Query Builder', () => {
       });
   });
 
+  it('update() method with object value', (done) => {
+    Majo
+      .table('city')
+      .where('Name', 'Test')
+      .update({
+        CountryCode: 'ABW',
+        Population: 5000,
+      })
+      .then(() => {
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+
   it('delete() method', (done) => {
     Majo
       .table('city')
@@ -869,6 +885,21 @@ describe('Testing Query Builder', () => {
       });
   });
 
+  it('increment() method with object value', (done) => {
+    Majo
+      .table('country')
+      .increment({
+        Population: 2,
+        Capital: 2,
+      })
+      .then(() => {
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+
   it('decrement() method', (done) => {
     Majo
       .table('city')
@@ -885,6 +916,21 @@ describe('Testing Query Builder', () => {
     Majo
       .table('city')
       .decrement('Population', 2)
+      .then(() => {
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+
+  it('decrement() method with object value', (done) => {
+    Majo
+      .table('country')
+      .decrement({
+        Population: 2,
+        Capital: 2,
+      })
       .then(() => {
         done();
       })
