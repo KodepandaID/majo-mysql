@@ -1574,5 +1574,17 @@ describe('MajoDB Mysql Builder Testing', () => {
           done(err);
         });
     });
+
+    it('hasColumn() method', (done) => {
+      Majo
+        .schema()
+        .hasColumn('city', 'Name')
+        .then(() => {
+          done();
+        })
+        .catch((err) => {
+          done(err);
+        });
+    });
   });
 });
