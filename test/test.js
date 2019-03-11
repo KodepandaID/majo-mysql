@@ -1547,9 +1547,26 @@ describe('MajoDB Mysql Builder Testing', () => {
     });
 
     it('dropTable() method', (done) => {
+      const removeDB = ['dbtest', 'dbTestTinyIncrement', 'dbTestSmallIncrement', 'dbTestMediumIncrement', 'dbTestBigIncrement', 'dbTestAutoIncrement', 'dbTestWithSchema'];
+      removeDB.forEach((table, index) => {
+        Majo
+          .schema()
+          .dropTable(table)
+          .then(() => {
+            if (removeDB.length === (index + 1)) {
+              done();
+            }
+          })
+          .catch((err) => {
+            done(err);
+          });
+      });
+    });
+
+    it('hasTable() method', (done) => {
       Majo
         .schema()
-        .dropTable('dbTest')
+        .hasTable('country')
         .then(() => {
           done();
         })
