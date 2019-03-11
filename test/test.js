@@ -1563,10 +1563,22 @@ describe('MajoDB Mysql Builder Testing', () => {
       });
     });
 
+    it('renameTable() method', (done) => {
+      Majo
+        .schema()
+        .renameTable('dbtest', 'dbTest')
+        .then(() => {
+          done();
+        })
+        .catch((err) => {
+          done(err);
+        });
+    });
+
     it('dropTableIfExists() method', (done) => {
       Majo
         .schema()
-        .dropTableIfExists('dbtest')
+        .dropTableIfExists('dbTest')
         .then(() => {
           done();
         })
