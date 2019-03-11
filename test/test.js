@@ -1547,7 +1547,7 @@ describe('MajoDB Mysql Builder Testing', () => {
     });
 
     it('dropTable() method', (done) => {
-      const removeDB = ['dbtest', 'dbTestTinyIncrement', 'dbTestSmallIncrement', 'dbTestMediumIncrement', 'dbTestBigIncrement', 'dbTestAutoIncrement', 'dbTestWithSchema'];
+      const removeDB = ['dbTestTinyIncrement', 'dbTestSmallIncrement', 'dbTestMediumIncrement', 'dbTestBigIncrement', 'dbTestAutoIncrement', 'dbTestWithSchema'];
       removeDB.forEach((table, index) => {
         Majo
           .schema()
@@ -1561,6 +1561,18 @@ describe('MajoDB Mysql Builder Testing', () => {
             done(err);
           });
       });
+    });
+
+    it('dropTableIfExists() method', (done) => {
+      Majo
+        .schema()
+        .dropTableIfExists('dbtest')
+        .then(() => {
+          done();
+        })
+        .catch((err) => {
+          done(err);
+        });
     });
 
     it('hasTable() method', (done) => {
