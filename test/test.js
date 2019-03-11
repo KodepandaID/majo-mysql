@@ -1545,5 +1545,17 @@ describe('MajoDB Mysql Builder Testing', () => {
           done(err);
         });
     });
+
+    it('dropTable() method', (done) => {
+      Majo
+        .schema()
+        .dropTable('dbTest')
+        .then(() => {
+          done();
+        })
+        .catch((err) => {
+          done(err);
+        });
+    });
   });
 });
