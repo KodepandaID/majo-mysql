@@ -1,6 +1,6 @@
 {
   "name": "majodb-mysql-builder",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "MajoDB Mysql Builder is query builder with expressive code that makes your day more enjoyable.",
   "main": "index.js",
   "scripts": {
