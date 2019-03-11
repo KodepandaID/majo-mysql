@@ -1545,5 +1545,70 @@ describe('MajoDB Mysql Builder Testing', () => {
           done(err);
         });
     });
+
+    it('dropTable() method', (done) => {
+      const removeDB = ['dbTestTinyIncrement', 'dbTestSmallIncrement', 'dbTestMediumIncrement', 'dbTestBigIncrement', 'dbTestAutoIncrement', 'dbTestWithSchema'];
+      removeDB.forEach((table, index) => {
+        Majo
+          .schema()
+          .dropTable(table)
+          .then(() => {
+            if (removeDB.length === (index + 1)) {
+              done();
+            }
+          })
+          .catch((err) => {
+            done(err);
+          });
+      });
+    });
+
+    it('renameTable() method', (done) => {
+      Majo
+        .schema()
+        .renameTable('dbtest', 'dbTest')
+        .then(() => {
+          done();
+        })
+        .catch((err) => {
+          done(err);
+        });
+    });
+
+    it('dropTableIfExists() method', (done) => {
+      Majo
+        .schema()
+        .dropTableIfExists('dbTest')
+        .then(() => {
+          done();
+        })
+        .catch((err) => {
+          done(err);
+        });
+    });
+
+    it('hasTable() method', (done) => {
+      Majo
+        .schema()
+        .hasTable('country')
+        .then(() => {
+          done();
+        })
+        .catch((err) => {
+          done(err);
+        });
+    });
+
+    it('hasColumn() method', (done) => {
+      Majo
+        .schema()
+        .hasColumn('city', 'Name')
+        .then(() => {
+          done();
+        })
+        .catch((err) => {
+          done(err);
+        });
+    });
   });
 });
