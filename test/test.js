@@ -1565,6 +1565,20 @@ describe('MajoDB Mysql Builder Testing', () => {
         });
     });
 
+    it('updateTable() method with change() method', (done) => {
+      Majo
+        .schema()
+        .updateTable('dbTestAutoIncrement', (table) => {
+          table.string('test4', 5).change();
+        })
+        .then(() => {
+          done();
+        })
+        .catch((err) => {
+          done(err);
+        });
+    });
+
     it('dropTable() method', (done) => {
       const removeDB = ['dbTestTinyIncrement', 'dbTestSmallIncrement', 'dbTestMediumIncrement', 'dbTestBigIncrement', 'dbTestAutoIncrement', 'dbTestWithSchema'];
       removeDB.forEach((table, index) => {
