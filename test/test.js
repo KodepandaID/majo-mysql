@@ -1536,7 +1536,26 @@ describe('MajoDB Mysql Builder Testing', () => {
         .schema()
         .withSchema('world')
         .createTable('dbTestAutoIncrement', (table) => {
-          table.integer().autoIncrement();
+          table.integer('id').autoIncrement();
+          table.string('test1');
+          table.string('test2');
+          table.string('test3');
+        })
+        .then(() => {
+          done();
+        })
+        .catch((err) => {
+          done(err);
+        });
+    });
+
+    it('updateTable() method', (done) => {
+      Majo
+        .schema()
+        .updateTable('dbTestAutoIncrement', (table) => {
+          table.dropColumn('test1');
+          table.dropColumn(['test2', 'test3']);
+          table.string('test4');
         })
         .then(() => {
           done();
