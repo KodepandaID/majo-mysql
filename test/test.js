@@ -1556,6 +1556,8 @@ describe('MajoDB Mysql Builder Testing', () => {
           table.dropColumn('test1');
           table.dropColumn(['test2', 'test3']);
           table.string('test4');
+          table.string('test5');
+          table.string('test6');
         })
         .then(() => {
           done();
@@ -1570,6 +1572,8 @@ describe('MajoDB Mysql Builder Testing', () => {
         .schema()
         .updateTable('dbTestAutoIncrement', (table) => {
           table.string('test4', 5).change();
+          table.string('test5').afterColumn('id');
+          table.string('test6').first();
         })
         .then(() => {
           done();
