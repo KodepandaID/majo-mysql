@@ -1537,7 +1537,7 @@ describe('MajoDB Mysql Builder Testing', () => {
         .withSchema('world')
         .createTable('dbTestAutoIncrement', (table) => {
           table.integer('id').autoIncrement();
-          table.string('test1');
+          table.string('test1').unique();
           table.string('test2');
           table.string('test3');
         })
@@ -1587,6 +1587,7 @@ describe('MajoDB Mysql Builder Testing', () => {
       Majo
         .schema()
         .updateTable('dbTestAutoIncrement', (table) => {
+          table.string('test6').unique();
           table.renameColumn('test4', 'test41');
         })
         .then(() => {
