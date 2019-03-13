@@ -1556,6 +1556,38 @@ describe('MajoDB Mysql Builder Testing', () => {
           table.dropColumn('test1');
           table.dropColumn(['test2', 'test3']);
           table.string('test4');
+          table.string('test5');
+          table.string('test6');
+        })
+        .then(() => {
+          done();
+        })
+        .catch((err) => {
+          done(err);
+        });
+    });
+
+    it('updateTable() method with change() method', (done) => {
+      Majo
+        .schema()
+        .updateTable('dbTestAutoIncrement', (table) => {
+          table.string('test4', 5).change();
+          table.string('test5').afterColumn('id');
+          table.string('test6').first();
+        })
+        .then(() => {
+          done();
+        })
+        .catch((err) => {
+          done(err);
+        });
+    });
+
+    it('updateTable() method with renameColumn() method', (done) => {
+      Majo
+        .schema()
+        .updateTable('dbTestAutoIncrement', (table) => {
+          table.renameColumn('test4', 'test41');
         })
         .then(() => {
           done();
