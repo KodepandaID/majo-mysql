@@ -1583,6 +1583,20 @@ describe('MajoDB Mysql Builder Testing', () => {
         });
     });
 
+    it('updateTable() method with renameColumn() method', (done) => {
+      Majo
+        .schema()
+        .updateTable('dbTestAutoIncrement', (table) => {
+          table.renameColumn('test4', 'test41');
+        })
+        .then(() => {
+          done();
+        })
+        .catch((err) => {
+          done(err);
+        });
+    });
+
     it('dropTable() method', (done) => {
       const removeDB = ['dbTestTinyIncrement', 'dbTestSmallIncrement', 'dbTestMediumIncrement', 'dbTestBigIncrement', 'dbTestAutoIncrement', 'dbTestWithSchema'];
       removeDB.forEach((table, index) => {
