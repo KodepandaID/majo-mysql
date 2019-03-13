@@ -1536,7 +1536,58 @@ describe('MajoDB Mysql Builder Testing', () => {
         .schema()
         .withSchema('world')
         .createTable('dbTestAutoIncrement', (table) => {
-          table.integer().autoIncrement();
+          table.integer('id').autoIncrement();
+          table.string('test1');
+          table.string('test2');
+          table.string('test3');
+        })
+        .then(() => {
+          done();
+        })
+        .catch((err) => {
+          done(err);
+        });
+    });
+
+    it('updateTable() method', (done) => {
+      Majo
+        .schema()
+        .updateTable('dbTestAutoIncrement', (table) => {
+          table.dropColumn('test1');
+          table.dropColumn(['test2', 'test3']);
+          table.string('test4');
+          table.string('test5');
+          table.string('test6');
+        })
+        .then(() => {
+          done();
+        })
+        .catch((err) => {
+          done(err);
+        });
+    });
+
+    it('updateTable() method with change() method', (done) => {
+      Majo
+        .schema()
+        .updateTable('dbTestAutoIncrement', (table) => {
+          table.string('test4', 5).change();
+          table.string('test5').afterColumn('id');
+          table.string('test6').first();
+        })
+        .then(() => {
+          done();
+        })
+        .catch((err) => {
+          done(err);
+        });
+    });
+
+    it('updateTable() method with renameColumn() method', (done) => {
+      Majo
+        .schema()
+        .updateTable('dbTestAutoIncrement', (table) => {
+          table.renameColumn('test4', 'test41');
         })
         .then(() => {
           done();
