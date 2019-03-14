@@ -1567,6 +1567,21 @@ describe('MajoDB Mysql Builder Testing', () => {
         });
     });
 
+    it('updateTable() method with drop and set primary', (done) => {
+      Majo
+        .schema()
+        .updateTable('dbTestWithSchema', (table) => {
+          table.dropPrimary('id');
+          table.primary('test_with_unsigned');
+        })
+        .then(() => {
+          done();
+        })
+        .catch((err) => {
+          done(err);
+        });
+    });
+
     it('updateTable() method with change() method', (done) => {
       Majo
         .schema()
