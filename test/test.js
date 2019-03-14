@@ -1537,7 +1537,7 @@ describe('MajoDB Mysql Builder Testing', () => {
         .withSchema('world')
         .createTable('dbTestAutoIncrement', (table) => {
           table.integer('id').autoIncrement();
-          table.string('test1');
+          table.string('test1').unique();
           table.string('test2');
           table.string('test3');
         })
@@ -1567,6 +1567,21 @@ describe('MajoDB Mysql Builder Testing', () => {
         });
     });
 
+    it('updateTable() method with drop and set primary', (done) => {
+      Majo
+        .schema()
+        .updateTable('dbTestWithSchema', (table) => {
+          table.dropPrimary('id');
+          table.primary('test_with_unsigned');
+        })
+        .then(() => {
+          done();
+        })
+        .catch((err) => {
+          done(err);
+        });
+    });
+
     it('updateTable() method with change() method', (done) => {
       Majo
         .schema()
@@ -1587,6 +1602,8 @@ describe('MajoDB Mysql Builder Testing', () => {
       Majo
         .schema()
         .updateTable('dbTestAutoIncrement', (table) => {
+          table.unique('test5');
+          table.string('test6').unique();
           table.renameColumn('test4', 'test41');
         })
         .then(() => {
