@@ -1531,6 +1531,24 @@ describe('MajoDB Mysql Builder Testing', () => {
         });
     });
 
+    it('createTable() method with index key', (done) => {
+      Majo
+        .schema()
+        .withSchema('world')
+        .createTable('test', (table) => {
+          table.integer('id').primary();
+          table.string('username', 50).unique();
+          table.string('email', 100).index();
+          table.string('name');
+        })
+        .then(() => {
+          done();
+        })
+        .catch((err) => {
+          done(err);
+        });
+    });
+
     it('createTable() method with autoIncrement()', (done) => {
       Majo
         .schema()
@@ -1614,8 +1632,37 @@ describe('MajoDB Mysql Builder Testing', () => {
         });
     });
 
+    it('updateTable() method with renameColumn() method only', (done) => {
+      Majo
+        .schema()
+        .updateTable('test', (table) => {
+          table.renameColumn('name', 'Name');
+        })
+        .then(() => {
+          done();
+        })
+        .catch((err) => {
+          done(err);
+        });
+    });
+
+    it('updateTable() method with dropUnique() and dropIndex()', (done) => {
+      Majo
+        .schema()
+        .updateTable('test', (table) => {
+          table.dropUnique('username');
+          table.dropIndex('email');
+        })
+        .then(() => {
+          done();
+        })
+        .catch((err) => {
+          done(err);
+        });
+    });
+
     it('dropTable() method', (done) => {
-      const removeDB = ['dbTestTinyIncrement', 'dbTestSmallIncrement', 'dbTestMediumIncrement', 'dbTestBigIncrement', 'dbTestAutoIncrement', 'dbTestWithSchema'];
+      const removeDB = ['dbTestTinyIncrement', 'dbTestSmallIncrement', 'dbTestMediumIncrement', 'dbTestBigIncrement', 'dbTestAutoIncrement', 'dbTestWithSchema', 'test'];
       removeDB.forEach((table, index) => {
         Majo
           .schema()
