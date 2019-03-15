@@ -1549,6 +1549,23 @@ describe('MajoDB Mysql Builder Testing', () => {
         });
     });
 
+    it('createTable() method with engine MyISAM', (done) => {
+      Majo
+        .schema()
+        .withSchema('world')
+        .createTable('test_spatial', (table) => {
+          table.point('spatial_point').nullable(false);
+          table.point('spatial_point2').spatial();
+          table.setEngine('MyISAM');
+        })
+        .then(() => {
+          done();
+        })
+        .catch((err) => {
+          done(err);
+        });
+    });
+
     it('createTable() method with autoIncrement()', (done) => {
       Majo
         .schema()
@@ -1646,6 +1663,21 @@ describe('MajoDB Mysql Builder Testing', () => {
         });
     });
 
+    it('updateTable() method with spatial() and dropSpatial()', (done) => {
+      Majo
+        .schema()
+        .updateTable('test_spatial', (table) => {
+          table.spatial('spatial_point');
+          table.dropSpatial('spatial_point2');
+        })
+        .then(() => {
+          done();
+        })
+        .catch((err) => {
+          done(err);
+        });
+    });
+
     it('updateTable() method with dropUnique() and dropIndex()', (done) => {
       Majo
         .schema()
@@ -1662,7 +1694,7 @@ describe('MajoDB Mysql Builder Testing', () => {
     });
 
     it('dropTable() method', (done) => {
-      const removeDB = ['dbTestTinyIncrement', 'dbTestSmallIncrement', 'dbTestMediumIncrement', 'dbTestBigIncrement', 'dbTestAutoIncrement', 'dbTestWithSchema', 'test'];
+      const removeDB = ['dbTestTinyIncrement', 'dbTestSmallIncrement', 'dbTestMediumIncrement', 'dbTestBigIncrement', 'dbTestAutoIncrement', 'dbTestWithSchema', 'test', 'test_spatial'];
       removeDB.forEach((table, index) => {
         Majo
           .schema()
