@@ -1602,6 +1602,21 @@ describe('MajoDB Mysql Builder Testing', () => {
         });
     });
 
+    it('updateTable() method with renameIndex()', (done) => {
+      Majo
+        .schema()
+        .withSchema('world')
+        .updateTable('test', (table) => {
+          table.renameIndex('email', 'email', 'user_email');
+        })
+        .then(() => {
+          done();
+        })
+        .catch((err) => {
+          done(err);
+        });
+    });
+
     it('updateTable() method with drop and set primary', (done) => {
       Majo
         .schema()
