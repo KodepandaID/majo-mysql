@@ -1603,7 +1603,7 @@ describe('MajoDB Mysql Builder Testing', () => {
         .schema()
         .updateTable('dbTestAutoIncrement', (table) => {
           table.unique('test5');
-          table.string('test6').unique();
+          table.index('test6');
           table.renameColumn('test4', 'test41');
         })
         .then(() => {
