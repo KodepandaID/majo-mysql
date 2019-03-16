@@ -1602,6 +1602,22 @@ describe('MajoDB Mysql Builder Testing', () => {
         });
     });
 
+    it('updateTable() method with renameIndex() and renameUnique()', (done) => {
+      Majo
+        .schema()
+        .withSchema('world')
+        .updateTable('test', (table) => {
+          table.renameUnique('username', 'username', 'uname');
+          table.renameIndex('email', 'email', 'user_email');
+        })
+        .then(() => {
+          done();
+        })
+        .catch((err) => {
+          done(err);
+        });
+    });
+
     it('updateTable() method with drop and set primary', (done) => {
       Majo
         .schema()
@@ -1682,8 +1698,8 @@ describe('MajoDB Mysql Builder Testing', () => {
       Majo
         .schema()
         .updateTable('test', (table) => {
-          table.dropUnique('username');
-          table.dropIndex('email');
+          table.dropUnique('uname');
+          table.dropIndex('user_email');
         })
         .then(() => {
           done();
