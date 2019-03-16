@@ -1522,6 +1522,7 @@ describe('MajoDB Mysql Builder Testing', () => {
         .withSchema('world')
         .createTable('dbTestBigIncrement', (table) => {
           table.bigIncrement();
+          table.string('email');
         })
         .then(() => {
           done();
@@ -1540,6 +1541,73 @@ describe('MajoDB Mysql Builder Testing', () => {
           table.string('username', 50).unique();
           table.string('email', 100).index();
           table.string('name');
+        })
+        .then(() => {
+          done();
+        })
+        .catch((err) => {
+          done(err);
+        });
+    });
+
+    it('createTable() method with foreign key', (done) => {
+      Majo
+        .schema()
+        .createTable('testforeign', (table) => {
+          table.integer('id').primary();
+          table.string('username', 50).unique();
+          table.string('email', 100).unique();
+          table.string('name');
+        })
+        .then(() => {
+          done();
+        })
+        .catch((err) => {
+          done(err);
+        });
+    });
+
+    it('createTable() method with foreign key', (done) => {
+      Majo
+        .schema()
+        .createTable('testforeign2', (table) => {
+          table.integer('id').primary();
+          table.string('fk_username', 50).unique();
+          table.foreign('fk_username')
+            .references('username').on('testforeign')
+            .onDelete('cascade');
+          table.string('fk_email', 100).unique();
+          table.string('name');
+        })
+        .then(() => {
+          done();
+        })
+        .catch((err) => {
+          done(err);
+        });
+    });
+
+    it('createTable() method with foreign key', (done) => {
+      Majo
+        .schema()
+        .createTable('testforeign3', (table) => {
+          table.integer('id').primary();
+          table.string('username', 50).unique();
+        })
+        .then(() => {
+          done();
+        })
+        .catch((err) => {
+          done(err);
+        });
+    });
+
+    it('createTable() method with foreign key', (done) => {
+      Majo
+        .schema()
+        .createTable('testforeign4', (table) => {
+          table.integer('id').primary();
+          table.string('username', 50).unique();
         })
         .then(() => {
           done();
@@ -1649,6 +1717,22 @@ describe('MajoDB Mysql Builder Testing', () => {
         });
     });
 
+    it('updateTable() method with foreign key update', (done) => {
+      Majo
+        .schema()
+        .updateTable('testforeign4', (table) => {
+          table.foreign('username')
+            .references('username').on('testforeign3')
+            .onDelete('cascade');
+        })
+        .then(() => {
+          done();
+        })
+        .catch((err) => {
+          done(err);
+        });
+    });
+
     it('updateTable() method with renameColumn() method', (done) => {
       Majo
         .schema()
@@ -1724,6 +1808,46 @@ describe('MajoDB Mysql Builder Testing', () => {
             done(err);
           });
       });
+    });
+
+    it('dropTable() method for table testforeign2 and testforeign', (done) => {
+      Majo
+        .schema()
+        .dropTable('testforeign2')
+        .then(() => {
+          Majo
+            .schema()
+            .dropTable('testforeign')
+            .then(() => {
+              done();
+            })
+            .catch((err) => {
+              done(err);
+            });
+        })
+        .catch((err) => {
+          done(err);
+        });
+    });
+
+    it('dropTable() method for table testforeign4 and testforeign3', (done) => {
+      Majo
+        .schema()
+        .dropTable('testforeign4')
+        .then(() => {
+          Majo
+            .schema()
+            .dropTable('testforeign3')
+            .then(() => {
+              done();
+            })
+            .catch((err) => {
+              done(err);
+            });
+        })
+        .catch((err) => {
+          done(err);
+        });
     });
 
     it('renameTable() method', (done) => {
