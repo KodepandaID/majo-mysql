@@ -1858,6 +1858,20 @@ describe('MajoDB Mysql Builder Testing', () => {
         });
     });
 
+    // it('updateTable() method with drop foreign key', (done) => {
+    //   Majo
+    //     .schema()
+    //     .updateTable('testforeign8', (table) => {
+    //       table.dropForeign('username');
+    //     })
+    //     .then(() => {
+    //       done();
+    //     })
+    //     .catch((err) => {
+    //       done(err);
+    //     });
+    // });
+
     it('updateTable() method with dropUnique() and dropIndex()', (done) => {
       Majo
         .schema()
