@@ -1741,8 +1741,8 @@ describe('MajoDB Mysql Builder Testing', () => {
         .schema()
         .withSchema('world')
         .updateTable('test', (table) => {
-          table.renameUnique('username', 'username', 'uname');
-          table.renameIndex('email', 'email', 'user_email');
+          table.renameUnique('username', 'test_username_unique', 'test_uname_unique');
+          table.renameIndex('email', 'test_email_index', 'test_user_email_index');
         })
         .then(() => {
           done();
@@ -1858,19 +1858,19 @@ describe('MajoDB Mysql Builder Testing', () => {
         });
     });
 
-    // it('updateTable() method with drop foreign key', (done) => {
-    //   Majo
-    //     .schema()
-    //     .updateTable('testforeign8', (table) => {
-    //       table.dropForeign('username');
-    //     })
-    //     .then(() => {
-    //       done();
-    //     })
-    //     .catch((err) => {
-    //       done(err);
-    //     });
-    // });
+    it('updateTable() method with drop foreign key', (done) => {
+      Majo
+        .schema()
+        .updateTable('testforeign8', (table) => {
+          table.dropForeign('username');
+        })
+        .then(() => {
+          done();
+        })
+        .catch((err) => {
+          done(err);
+        });
+    });
 
     it('updateTable() method with dropUnique() and dropIndex()', (done) => {
       Majo
