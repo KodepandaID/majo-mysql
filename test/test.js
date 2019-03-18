@@ -1987,7 +1987,7 @@ describe('MajoDB Mysql Builder Testing', () => {
     it('renameTable() method', (done) => {
       Majo
         .schema()
-        .renameTable('dbtest', 'dbTest')
+        .renameTable('dbtest', 'newdbtest')
         .then(() => {
           done();
         })
@@ -1999,7 +1999,7 @@ describe('MajoDB Mysql Builder Testing', () => {
     it('dropTableIfExists() method', (done) => {
       Majo
         .schema()
-        .dropTableIfExists('dbTest')
+        .dropTableIfExists('newdbtest')
         .then(() => {
           done();
         })
