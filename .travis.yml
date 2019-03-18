@@ -26,7 +26,12 @@ install:
   - npm install --save-dev
 
 addons:
-  mariadb: '10.0'
+  apt:
+    sources:
+      - mysql-5.7-trusty
+    packages:
+      - mysql-server
+      - mysql-client
 
 before_script:
   - mysql -u root world < test/sql/world.sql
