@@ -1312,6 +1312,7 @@ Majo
   });
 ```
 When creating the table, you may use any of the schema builder's column methods to define the table's columns.
+
 #### Available Column Type
 | Command | Description |
 | ------- | ----------- |
@@ -1588,6 +1589,7 @@ Majo
 ```
 
 If you want renaming another available index type, use this:
+
 | Command | Description |
 | ------- | ----------- |
 | ``` table.renameIndex('column_name', 'old_key_name', 'new_key_name'); ``` | Rename a basic index |
