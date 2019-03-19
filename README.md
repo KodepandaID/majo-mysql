@@ -15,6 +15,7 @@ You can report bugs and discuss features on the [GitHub issues page](https://git
 * Full featured query
 * Expressive method
 * Schema builders
+* Database Manager (WIP)
 * Relationships (WIP)
 
 ## Installation
