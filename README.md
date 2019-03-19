@@ -1566,6 +1566,7 @@ table.unique('username', 'email');
 
 #### Available Index Types
 Each index method accepts an optional second argument to specify the name of the index.
+
 | Command | Description |
 | ------- | ----------- |
 | ``` table.primary('id'); ``` | Adds a primary key |
