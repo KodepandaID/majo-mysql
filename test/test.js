@@ -1531,13 +1531,182 @@ describe('MajoDB Mysql Builder Testing', () => {
         });
     });
 
+    it('createTable() method with index key', (done) => {
+      Majo
+        .schema()
+        .withSchema('world')
+        .createTable('test', (table) => {
+          table.integer('id').primary();
+          table.string('username', 50).unique();
+          table.string('email', 100).index();
+          table.string('name');
+        })
+        .then(() => {
+          done();
+        })
+        .catch((err) => {
+          done(err);
+        });
+    });
+
+    it('createTable() method with foreign key', (done) => {
+      Majo
+        .schema()
+        .createTable('testforeign', (table) => {
+          table.integer('id');
+          table.integer('ids');
+          table.string('username', 50).unique();
+          table.string('email', 100).unique();
+          table.string('name');
+        })
+        .then(() => {
+          done();
+        })
+        .catch((err) => {
+          done(err);
+        });
+    });
+
+    it('createTable() method with foreign key', (done) => {
+      Majo
+        .schema()
+        .createTable('testforeign2', (table) => {
+          table.integer('id').primary();
+          table.string('fk_username', 50).unique();
+          table.foreign('fk_username')
+            .references('username').on('testforeign')
+            .onDelete('cascade');
+          table.string('fk_email', 100).unique();
+          table.string('name');
+        })
+        .then(() => {
+          done();
+        })
+        .catch((err) => {
+          done(err);
+        });
+    });
+
+    it('createTable() method with foreign key', (done) => {
+      Majo
+        .schema()
+        .createTable('testforeign3', (table) => {
+          table.integer('id').primary();
+          table.string('username', 50).unique();
+        })
+        .then(() => {
+          done();
+        })
+        .catch((err) => {
+          done(err);
+        });
+    });
+
+    it('createTable() method with foreign key', (done) => {
+      Majo
+        .schema()
+        .createTable('testforeign4', (table) => {
+          table.integer('id').primary();
+          table.string('username', 50).unique();
+        })
+        .then(() => {
+          done();
+        })
+        .catch((err) => {
+          done(err);
+        });
+    });
+
+    it('createTable() method with foreign key', (done) => {
+      Majo
+        .schema()
+        .createTable('testforeign5', (table) => {
+          table.integer('id').primary();
+          table.string('username', 50).unique();
+        })
+        .then(() => {
+          done();
+        })
+        .catch((err) => {
+          done(err);
+        });
+    });
+
+    it('createTable() method with foreign key', (done) => {
+      Majo
+        .schema()
+        .createTable('testforeign6', (table) => {
+          table.integer('id').primary();
+          table.string('username', 50).unique();
+          table.foreign('username')
+            .references('username').on('testforeign5')
+            .onUpdate('cascade');
+        })
+        .then(() => {
+          done();
+        })
+        .catch((err) => {
+          done(err);
+        });
+    });
+
+    it('createTable() method with foreign key', (done) => {
+      Majo
+        .schema()
+        .createTable('testforeign7', (table) => {
+          table.integer('id').primary();
+          table.string('username', 50).unique();
+        })
+        .then(() => {
+          done();
+        })
+        .catch((err) => {
+          done(err);
+        });
+    });
+
+    it('createTable() method with foreign key', (done) => {
+      Majo
+        .schema()
+        .createTable('testforeign8', (table) => {
+          table.integer('id').primary();
+          table.string('username', 50).unique();
+          table.foreign('username')
+            .references('username').on('testforeign7')
+            .onDelete('cascade');
+        })
+        .then(() => {
+          done();
+        })
+        .catch((err) => {
+          done(err);
+        });
+    });
+
+    it('createTable() method with engine MyISAM', (done) => {
+      Majo
+        .schema()
+        .withSchema('world')
+        .createTable('test_spatial', (table) => {
+          table.point('spatial_point').nullable(false);
+          table.point('spatial_point2').spatial();
+          table.setEngine('MyISAM');
+        })
+        .then(() => {
+          done();
+        })
+        .catch((err) => {
+          done(err);
+        });
+    });
+
     it('createTable() method with autoIncrement()', (done) => {
       Majo
         .schema()
         .withSchema('world')
         .createTable('dbTestAutoIncrement', (table) => {
           table.integer('id').autoIncrement();
-          table.string('test1');
+          table.string('test1').unique();
           table.string('test2');
           table.string('test3');
         })
@@ -1567,6 +1736,51 @@ describe('MajoDB Mysql Builder Testing', () => {
         });
     });
 
+    it('updateTable() method with renameIndex() and renameUnique()', (done) => {
+      Majo
+        .schema()
+        .withSchema('world')
+        .updateTable('test', (table) => {
+          table.renameUnique('username', 'test_username_unique', 'test_uname_unique');
+          table.renameIndex('email', 'test_email_index', 'test_user_email_index');
+        })
+        .then(() => {
+          done();
+        })
+        .catch((err) => {
+          done(err);
+        });
+    });
+
+    it('updateTable() method with drop and set primary', (done) => {
+      Majo
+        .schema()
+        .updateTable('dbTestWithSchema', (table) => {
+          table.dropPrimary('id');
+          table.primary('test_with_unsigned');
+        })
+        .then(() => {
+          done();
+        })
+        .catch((err) => {
+          done(err);
+        });
+    });
+
+    it('updateTable() method set primary composite keys', (done) => {
+      Majo
+        .schema()
+        .updateTable('testforeign', (table) => {
+          table.primary('id', 'ids');
+        })
+        .then(() => {
+          done();
+        })
+        .catch((err) => {
+          done(err);
+        });
+    });
+
     it('updateTable() method with change() method', (done) => {
       Majo
         .schema()
@@ -1583,10 +1797,28 @@ describe('MajoDB Mysql Builder Testing', () => {
         });
     });
 
+    it('updateTable() method with foreign key update', (done) => {
+      Majo
+        .schema()
+        .updateTable('testforeign4', (table) => {
+          table.foreign('username')
+            .references('username').on('testforeign3')
+            .onUpdate('cascade');
+        })
+        .then(() => {
+          done();
+        })
+        .catch((err) => {
+          done(err);
+        });
+    });
+
     it('updateTable() method with renameColumn() method', (done) => {
       Majo
         .schema()
         .updateTable('dbTestAutoIncrement', (table) => {
+          table.unique('test5');
+          table.index('test6');
           table.renameColumn('test4', 'test41');
         })
         .then(() => {
@@ -1597,8 +1829,66 @@ describe('MajoDB Mysql Builder Testing', () => {
         });
     });
 
+    it('updateTable() method with renameColumn() method only', (done) => {
+      Majo
+        .schema()
+        .updateTable('test', (table) => {
+          table.renameColumn('name', 'Name');
+        })
+        .then(() => {
+          done();
+        })
+        .catch((err) => {
+          done(err);
+        });
+    });
+
+    it('updateTable() method with spatial() and dropSpatial()', (done) => {
+      Majo
+        .schema()
+        .updateTable('test_spatial', (table) => {
+          table.spatial('spatial_point');
+          table.dropSpatial('spatial_point2');
+        })
+        .then(() => {
+          done();
+        })
+        .catch((err) => {
+          done(err);
+        });
+    });
+
+    it('updateTable() method with drop foreign key', (done) => {
+      Majo
+        .schema()
+        .updateTable('testforeign8', (table) => {
+          table.dropForeign('username');
+        })
+        .then(() => {
+          done();
+        })
+        .catch((err) => {
+          done(err);
+        });
+    });
+
+    it('updateTable() method with dropUnique() and dropIndex()', (done) => {
+      Majo
+        .schema()
+        .updateTable('test', (table) => {
+          table.dropUnique('uname');
+          table.dropIndex('user_email');
+        })
+        .then(() => {
+          done();
+        })
+        .catch((err) => {
+          done(err);
+        });
+    });
+
     it('dropTable() method', (done) => {
-      const removeDB = ['dbTestTinyIncrement', 'dbTestSmallIncrement', 'dbTestMediumIncrement', 'dbTestBigIncrement', 'dbTestAutoIncrement', 'dbTestWithSchema'];
+      const removeDB = ['dbTestTinyIncrement', 'dbTestSmallIncrement', 'dbTestMediumIncrement', 'dbTestBigIncrement', 'dbTestAutoIncrement', 'dbTestWithSchema', 'test', 'test_spatial'];
       removeDB.forEach((table, index) => {
         Majo
           .schema()
@@ -1614,10 +1904,90 @@ describe('MajoDB Mysql Builder Testing', () => {
       });
     });
 
+    it('dropTable() method for table testforeign2 and testforeign', (done) => {
+      Majo
+        .schema()
+        .dropTable('testforeign2')
+        .then(() => {
+          Majo
+            .schema()
+            .dropTable('testforeign')
+            .then(() => {
+              done();
+            })
+            .catch((err) => {
+              done(err);
+            });
+        })
+        .catch((err) => {
+          done(err);
+        });
+    });
+
+    it('dropTable() method for table testforeign4 and testforeign3', (done) => {
+      Majo
+        .schema()
+        .dropTable('testforeign4')
+        .then(() => {
+          Majo
+            .schema()
+            .dropTable('testforeign3')
+            .then(() => {
+              done();
+            })
+            .catch((err) => {
+              done(err);
+            });
+        })
+        .catch((err) => {
+          done(err);
+        });
+    });
+
+    it('dropTable() method for table testforeign5 and testforeign6', (done) => {
+      Majo
+        .schema()
+        .dropTable('testforeign6')
+        .then(() => {
+          Majo
+            .schema()
+            .dropTable('testforeign5')
+            .then(() => {
+              done();
+            })
+            .catch((err) => {
+              done(err);
+            });
+        })
+        .catch((err) => {
+          done(err);
+        });
+    });
+
+    it('dropTable() method for table testforeign8 and testforeign7', (done) => {
+      Majo
+        .schema()
+        .dropTable('testforeign8')
+        .then(() => {
+          Majo
+            .schema()
+            .dropTable('testforeign7')
+            .then(() => {
+              done();
+            })
+            .catch((err) => {
+              done(err);
+            });
+        })
+        .catch((err) => {
+          done(err);
+        });
+    });
+
     it('renameTable() method', (done) => {
       Majo
         .schema()
-        .renameTable('dbtest', 'dbTest')
+        .renameTable('dbtest', 'newdbtest')
         .then(() => {
           done();
         })
@@ -1629,7 +1999,7 @@ describe('MajoDB Mysql Builder Testing', () => {
     it('dropTableIfExists() method', (done) => {
       Majo
         .schema()
-        .dropTableIfExists('dbTest')
+        .dropTableIfExists('newdbtest')
         .then(() => {
           done();
         })
