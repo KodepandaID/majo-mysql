@@ -1,5 +1,5 @@
 {
-  "name": "majodb-mysql-builder",
+  "name": "majo-mysql",
   "version": "0.2.0",
   "description": "MajoDB Mysql Builder is query builder with expressive code that makes your day more enjoyable.",
   "main": "index.js",
@@ -14,9 +14,9 @@
     "query-builder",
     "mysql-builder"
   ],
-  "homepage": "https://github.com/LordAur/majodb-mysql-builder",
+  "homepage": "https://github.com/LordAur/majo-mysql",
   "bugs": {
-    "url": "https://github.com/LordAur/majodb-mysql-builder/issues",
+    "url": "https://github.com/LordAur/majo-mysql/issues",
     "email": "yudha.webdev@gmail.com"
   },
   "author": {
@@ -26,7 +26,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/LordAur/majodb-mysql-builder"
+    "url": "https://github.com/LordAur/majo-mysql"
   },
   "license": "MIT",
   "devDependencies": {
