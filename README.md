@@ -7,9 +7,9 @@
 
 You can use this query builder for Mysql and MariaDB then require NodeJS version 8+. 
 
-MajoDB is available for use under [MIT LICENSE](https://github.com/LordAur/majodb-mysql-builder/blob/master/LICENSE)
+MajoDB is available for use under [MIT LICENSE](https://github.com/LordAur/majo-mysql/blob/master/LICENSE)
 
-You can report bugs and discuss features on the [GitHub issues page](https://github.com/LordAur/majodb-mysql-builder/issues), or send tweets to [@LordAur](https://twitter.com/LordAur).
+You can report bugs and discuss features on the [GitHub issues page](https://github.com/LordAur/majo-mysql/issues), or send tweets to [@LordAur](https://twitter.com/LordAur).
 
 ## Features
 * Full featured query
