@@ -1,7 +1,7 @@
 # MajoDB Mysql
 [![npm version](http://img.shields.io/npm/v/majodb-mysql-builder.svg)](https://npmjs.org/package/majodb-mysql-builder)
-[![Build Status](https://travis-ci.org/LordAur/majodb-mysql-builder.svg?branch=master)](https://travis-ci.org/LordAur/majodb-mysql-builder)
-[![Coverage Status](https://coveralls.io/repos/github/LordAur/majodb-mysql-builder/badge.svg?branch=master)](https://coveralls.io/github/LordAur/majodb-mysql-builder?branch=master)
+[![Build Status](https://travis-ci.org/LordAur/majo-mysql.svg?branch=master)](https://travis-ci.org/LordAur/majo-mysql)
+[![Coverage Status](https://coveralls.io/repos/github/LordAur/majo-mysql/badge.svg?branch=master)](https://coveralls.io/github/LordAur/majo-mysql?branch=master)
 [![Dependencies Status](https://david-dm.org/lordaur/majodb-mysql-builder.svg)](https://david-dm.org/lordaur/majodb-mysql-builder)
 > **MajoDB Mysql Builder is query builder with expressive code that makes your day more enjoyable**
 
