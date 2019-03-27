@@ -241,6 +241,7 @@ describe('Majo Mysql DB Manager Testing', () => {
         user.revokeShutdown();
         user.revokeSuper();
         user.revokeCreateTablespace();
+        user.identified('password');
       })
       .then(() => {
         done();
