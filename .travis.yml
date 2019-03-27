@@ -1,5 +1,5 @@
 sudo: true
-dist: trusty
+dist: xenial
 services:
   - mysql
 language: node_js
@@ -23,14 +23,6 @@ before_install:
 install:
   - npm install
   - npm install --save-dev
-
-addons:
-  apt:
-    sources:
-      - mysql-5.7-trusty
-    packages:
-      - mysql-server
-      - mysql-client
 
 before_script:
   - mysql -u root world < test/sql/world.sql
