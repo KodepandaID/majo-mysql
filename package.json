@@ -1,7 +1,7 @@
 {
   "name": "majo-mysql",
-  "version": "0.2.0",
-  "description": "MajoDB Mysql Builder is query builder with expressive code that makes your day more enjoyable.",
+  "version": "0.3.0",
+  "description": "Majo Mysql is a library that can help you build query, schema, and control your database more easier.",
   "main": "index.js",
   "scripts": {
     "test": "mocha --timeout 30000 --exit",
@@ -11,8 +11,10 @@
     "sql",
     "mysql",
     "mariadb",
-    "query-builder",
-    "mysql-builder"
+    "query builder",
+    "schema builder",
+    "mysql builder",
+    "database manager"
   ],
   "homepage": "https://github.com/LordAur/majo-mysql",
   "bugs": {
@@ -20,7 +22,7 @@
     "email": "yudha.webdev@gmail.com"
   },
   "author": {
-    "name": "Yudha Pratama",
+    "name": "Yudha Pratama Wicaksana",
     "email": "yudha.webdev@gmail.com",
     "url": "https://yudhapratama.com"
   },

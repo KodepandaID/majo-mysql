@@ -5,7 +5,7 @@ const Majo = require('../index').connection({
   database: 'world',
 });
 
-describe('MajoDB Mysql Builder Testing', () => {
+describe('Majo Mysql Testing', () => {
   describe('# Testing Query Builder', () => {
     it('Retrieving results with get() method', (done) => {
       Majo
