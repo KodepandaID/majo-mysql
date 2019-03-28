@@ -217,6 +217,11 @@ describe('Majo Mysql DB Manager Testing', () => {
       .db()
       .updateUser('majo', '%', (user) => {
         user.revokeAll();
+        user.grantCreateUser();
+        user.grantEvent();
+        user.grantFile();
+        user.grantProcess();
+        user.grantReload();
       })
       .then(() => {
         done();
