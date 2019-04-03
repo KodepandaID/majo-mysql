@@ -136,7 +136,7 @@ describe('Majo Mysql Trigger Testing', () => {
   it('Run dropTrigger() method', (done) => {
     Majo
       .trigger()
-      .dropTrigger('before_city_insert', 'before_city_update', 'before_city_delete', 'after_city_insert', 'after_city_update', 'after_city_delete')
+      .dropTrigger('world', 'before_city_insert', 'before_city_update', 'before_city_delete', 'after_city_insert', 'after_city_update', 'after_city_delete')
       .then(() => {
         Majo
           .schema()
