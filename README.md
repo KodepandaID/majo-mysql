@@ -16,6 +16,7 @@ You can report bugs and discuss features on the [GitHub issues page](https://git
 * Expressive method
 * Schema builders
 * Database Manager
+* Trigger
 * Relationships (WIP)
 
 ## Installation
@@ -1859,4 +1860,92 @@ You can cloning only structured from spesific database to a new database like th
 Majo
   .db()
   .cloneDatabaseStructured('old-database', 'new-database');
+```
+
+### Triggers
+Do you want to make a trigger? Majo provides a method for making triggers easily. You can see a list of triggers, create new triggers or delete triggers.
+
+If you want to use trigger, use **trigger()** method first, like this:
+```js
+Majo
+  .trigger()
+```
+
+#### Show all triggers on database
+If you want to see all triggers on the database, you can use **showTriggers()** method, like this:
+```js
+Majo
+  .trigger()
+  .showTriggers('database-name')
+  .then((results) => {
+    res.status(200).json(results);
+  })
+  .catch((err) => {
+    res.status(500).json(err);
+  });
+```
+
+#### Show spesific trigger on database
+Also, you can see the detail spesific trigger from your database. Use method **showTrigger()** likke this:
+```js
+Majo
+  .trigger()
+  .showTrigger('database-name', 'trigger-name')
+  .then((results) => {
+    res.status(200).json(results);
+  })
+  .catch((err) => {
+    res.status(500).json(err);
+  });
+```
+
+#### Create new trigger
+If you want to make a trigger, fill in the first argument with log  inserted table and in the second argument, fill with the trigger table.
+
+```js
+Majo
+  .trigger()
+  .createAfterInsert('log_users', 'users', (trigger) => {
+    trigger.field('full_name').value().new('full_name');
+    trigger.field('description').value('Insert the data');
+    trigger.field('created_at').value().now();
+  });
+```
+
+Majo supports all trigger events, along with a list of trigger events that you can make.
+
+
+| Command | Description |
+| ------- | ----------- |
+| ``` .createAfterInsert('log_users', 'users') ``` | Create trigger with event after insert |
+| ``` .createAfterUpdate('log_users', 'users') ``` | Create trigger with event after update |
+| ``` .createAfterDelete('log_users', 'users') ``` | Create trigger with event after delete |
+| ``` .createBeforeInsert('log_users', 'users') ``` | Create trigger with event before insert |
+| ``` .createBeforeUpdate('log_users', 'users') ``` | Create trigger with event before update |
+| ``` .createBeforeDelete('log_users', 'users') ``` | Create trigger with event before delete |
+
+Also, a little explanation on insert value trigger. Here are some commands that you can use when creating triggers.
+
+| Command | Descripption |
+| ------- | ------------ |
+| ``` trigger.field('field-name'); ``` | Fill with the name of field |
+| ``` trigger.field('field-name').value(1); ``` | You can fill value with string or number |
+| ``` trigger.field('field-name').value().old('trigger-table-field-name'); ``` | The value will be filled with the old data value |
+| ``` trigger.field('field-name').value().new('trigger-table-field-name'); ``` | The value will be filled with the new data value |
+| ``` trigger.field('field-name').value().now(); ``` | The value will be filled with the timestamp |
+
+#### Dropping a spesific trigger
+If you want to delete a trigger, you can delete only trigger.
+```js
+Majo
+  .trigger()
+  .dropTrigger('database-name', 'trigger-name');
+```
+
+Also, if you want to delete many triggers at once, you can write like this:
+```js
+Majo
+  .trigger()
+  .dropTrigger('database-name', 'trigger-name', 
+  'trigger-name2', 'trigger-name3');
 ```
