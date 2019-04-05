@@ -1,33 +1,34 @@
-# MajoDB Mysql
-[![npm version](http://img.shields.io/npm/v/majodb-mysql-builder.svg)](https://npmjs.org/package/majodb-mysql-builder)
-[![Build Status](https://travis-ci.org/LordAur/majodb-mysql-builder.svg?branch=master)](https://travis-ci.org/LordAur/majodb-mysql-builder)
-[![Coverage Status](https://coveralls.io/repos/github/LordAur/majodb-mysql-builder/badge.svg?branch=master)](https://coveralls.io/github/LordAur/majodb-mysql-builder?branch=master)
-[![Dependencies Status](https://david-dm.org/lordaur/majodb-mysql-builder.svg)](https://david-dm.org/lordaur/majodb-mysql-builder)
-> **MajoDB Mysql Builder is query builder with expressive code that makes your day more enjoyable**
+# Majo Mysql
+[![npm version](http://img.shields.io/npm/v/majo-mysql.svg)](https://npmjs.org/package/majo-mysql)
+[![Build Status](https://travis-ci.org/LordAur/majo-mysql.svg?branch=master)](https://travis-ci.org/LordAur/majo-mysql)
+[![Coverage Status](https://coveralls.io/repos/github/LordAur/majo-mysql/badge.svg?branch=master)](https://coveralls.io/github/LordAur/majo-mysql?branch=master)
+[![Dependencies Status](https://david-dm.org/lordaur/majo-mysql.svg)](https://david-dm.org/lordaur/majo-mysql)
+> **Majo Mysql is a library that can help you build query, schema, and control your database more easier.**
 
-You can use this query builder for Mysql and MariaDB then require NodeJS version 8+. 
+Majo Mysql can only be used on the NodeJS version 8 or higher. Majo Mysql supports Mysql version 5.7 or higher and MariaDB. For use in other databases different libraries will be created.
 
-MajoDB is available for use under [MIT LICENSE](https://github.com/LordAur/majodb-mysql-builder/blob/master/LICENSE)
+Majo Mysql is available for use under [MIT LICENSE](https://github.com/LordAur/majo-mysql/blob/master/LICENSE)
 
-You can report bugs and discuss features on the [GitHub issues page](https://github.com/LordAur/majodb-mysql-builder/issues), or send tweets to [@LordAur](https://twitter.com/LordAur).
+You can report bugs and discuss features on the [GitHub issues page](https://github.com/LordAur/majo-mysql/issues), or send tweets to [@LordAur](https://twitter.com/LordAur).
 
 ## Features
 * Full featured query
 * Expressive method
 * Schema builders
-* Database Manager (WIP)
+* Database Manager
+* Trigger
 * Relationships (WIP)
 
 ## Installation
 ```shell
-npm i majodb-mysql-builder
+npm i majo-mysql
 ```
 
 ## How to use
 ### Initializing the library
-The MajoDB module is itself a function which takes a configuration object for Majo.
+The Majo module is itself a function which takes a configuration object for Majo.
 ```js
-const majo = require('majodb-mysql-builder')
+const majo = require('majo-mysql')
   .connection({
     host: 'localhost',
     user: 'root',
@@ -1642,4 +1643,309 @@ Majo
   .updateTable('posts', (table) => {
     table.dropForeign('id');
   });
+```
+
+### Database Manager
+Majo makes it easy for users to manage the database. You can manage databases, privileges and cloning the database.
+
+To use a database manager you must call **db()** method first.
+```js
+Majo
+  .db()
+```
+
+#### Show all available database
+Show all available databases with spesific information.
+```js
+Majo
+  .db()
+  .showDatabases()
+  .then((results) => {
+    res.status(200).json(results);
+  });
+```
+
+#### Show spesific database
+Shows the specific database you selected.
+```js
+Majo
+  .db()
+  .showDatabase('database-name')
+  .then((results) => {
+    res.status(200).json(results);
+  });
+```
+
+#### Show database tables
+You can see the list of tables with spesific information.
+```js
+Majo
+  .db()
+  .showDatabaseInfo('database-name')
+  .then((results) => {
+    res.status(200).json(results);
+  });
+```
+
+#### Show spesific table information from your database
+You can see the spesific information from your table
+```js
+Majo
+  .db()
+  .showColumn('database-name', 'table-name')
+  .then((results) => {
+    res.status(200).json(results);
+  });
+```
+
+#### Show indexes
+You can see all the indexes listed in your database.
+```js
+Majo
+  .db()
+  .showIndexes('database-name')
+  .then((results) => {
+    res.status(200).json(results);
+  });
+```
+
+#### Show users with information
+You can see all the users in your database.
+```js
+Majo
+  .db()
+  .showUsers()
+  .then((results) => {
+    res.status(200).json(results);
+  });
+```
+
+#### Show the spesific user with information
+You can see the spesific user in your database.
+```js
+Majo
+  .db()
+  .showUser('user-name')
+  .then((results) => {
+    res.status(200).json(results);
+  });
+```
+
+#### Create database
+With majo you can create a new database. You can set the character type and collation like this:
+```js
+Majo
+  .db()
+  .createDatabase('database-name', (database) => {
+    database.charset('utf8');
+    database.collation('utf8_general_ci');
+  });
+```
+
+Or you can create a database by checking whether the database is available or not.
+```js
+Majo
+  .db()
+  .createDatabaseIfNotExists('database-name', (database) => {
+    database.charset('utf8');
+    database.collation('utf8_general_ci');
+  });
+```
+
+#### Update database
+To update charset or collation use this:
+```js
+Majo
+  .db()
+  .updateDatabase('database-name', (database) => {
+    database.charset('utf8');
+    database.collation('utf8_unicode_ci');
+  });
+```
+
+#### Drop database
+To dropping a spesific database
+```js
+Majo
+  .db()
+  .dropDatabase('database-name');
+```
+
+#### Rename database
+You can renaming the spesific database without losing your data.
+```js
+Majo
+  .db()
+  .renameDatabase('old-database-name', 'new-database-name');
+```
+
+#### Create user privileges
+You can create a new user with spesific grants.
+```js
+Majo
+  .db()
+  .createUser('majo', '%', (user) => {
+    user.grantAll();
+    user.identified('password');
+  });
+```
+
+If you want to set the user password use **user.identified('password')**, you can also use empty password.
+
+You can use the available grants.
+
+| Command | Description |
+| ------- | ----------- |
+| ```user.grantAll()``` | Grant with all privileges |
+| ```user.grantCreateUser()``` | Grant create user |
+| ```user.grantEvent()``` | Grant event |
+| ```user.grantFile()``` | Grant file |
+| ```user.grantProcess()``` | Grant process |
+| ```user.grantReload()``` | Grant reload |
+| ```user.grantReplicationClient()``` | Grant to replication client |
+| ```user.grantReplicationSlave()``` | Grant to replication slave |
+| ```user.grantShowDatabases()``` | Grant to show database |
+| ```user.grantShutdown()``` | Grant to shutdown database |
+| ```user.grantSuper()``` | Grant super |
+| ```user.grantCreateTablespace()``` | Grant to create tablespace |
+| ```user.grantUsage()``` | Grant without any permission |
+
+#### Update user privileges
+You can change user data such as passwords, add grant or revoke grant.
+```js
+Majo
+  .db()
+  .createUser('majo', '%', (user) => {
+    user.revokeAll();
+    user.identified('new-password');
+  });
+```
+
+You can use the available revoke grants.
+
+| Command | Description |
+| ------- | ----------- |
+| ```user.revokeAll()``` | Revoke all privileges |
+| ```user.revokeCreateUser()``` | Revoke create user |
+| ```user.revokeEvent()``` | Revoke event |
+| ```user.revokeFile()``` | Revoke file |
+| ```user.revokeProcess()``` | Revoke process |
+| ```user.revokeReload()``` | Revoke reload |
+| ```user.revokeReplicationClient()``` | Revoke replication client |
+| ```user.revokeReplicationSlave()``` | Revoke replication slave |
+| ```user.revokeShowDatabases()``` | Revoke show database |
+| ```user.revokeShutdown()``` | Revoke shutdown database |
+| ```user.revokeSuper()``` | Revoke super |
+| ```user.revokeCreateTablespace()``` | Revoke create tablespace |
+
+#### Drop user privileges
+To dropping a spesific user use like this:
+```js
+Majo
+  .db()
+  .dropuser('user-name');
+```
+
+#### Clone database
+You can cloning structured and data from spesific database to a new database like this:
+```js
+Majo
+  .db()
+  .cloneDatabase('old-database', 'new-database');
+```
+
+#### Clone only structured database
+You can cloning only structured from spesific database to a new database like this:
+```js
+Majo
+  .db()
+  .cloneDatabaseStructured('old-database', 'new-database');
+```
+
+### Triggers
+Do you want to make a trigger? Majo provides a method for making triggers easily. You can see a list of triggers, create new triggers or delete triggers.
+
+If you want to use trigger, use **trigger()** method first, like this:
+```js
+Majo
+  .trigger()
+```
+
+#### Show all triggers on database
+If you want to see all triggers on the database, you can use **showTriggers()** method, like this:
+```js
+Majo
+  .trigger()
+  .showTriggers('database-name')
+  .then((results) => {
+    res.status(200).json(results);
+  })
+  .catch((err) => {
+    res.status(500).json(err);
+  });
+```
+
+#### Show spesific trigger on database
+Also, you can see the detail spesific trigger from your database. Use method **showTrigger()** likke this:
+```js
+Majo
+  .trigger()
+  .showTrigger('database-name', 'trigger-name')
+  .then((results) => {
+    res.status(200).json(results);
+  })
+  .catch((err) => {
+    res.status(500).json(err);
+  });
+```
+
+#### Create new trigger
+If you want to make a trigger, fill in the first argument with log  inserted table and in the second argument, fill with the trigger table.
+
+```js
+Majo
+  .trigger()
+  .createAfterInsert('log_users', 'users', (trigger) => {
+    trigger.field('full_name').value().new('full_name');
+    trigger.field('description').value('Insert the data');
+    trigger.field('created_at').value().now();
+  });
+```
+
+Majo supports all trigger events, along with a list of trigger events that you can make.
+
+
+| Command | Description |
+| ------- | ----------- |
+| ``` .createAfterInsert('log_users', 'users') ``` | Create trigger with event after insert |
+| ``` .createAfterUpdate('log_users', 'users') ``` | Create trigger with event after update |
+| ``` .createAfterDelete('log_users', 'users') ``` | Create trigger with event after delete |
+| ``` .createBeforeInsert('log_users', 'users') ``` | Create trigger with event before insert |
+| ``` .createBeforeUpdate('log_users', 'users') ``` | Create trigger with event before update |
+| ``` .createBeforeDelete('log_users', 'users') ``` | Create trigger with event before delete |
+
+Also, a little explanation on insert value trigger. Here are some commands that you can use when creating triggers.
+
+| Command | Descripption |
+| ------- | ------------ |
+| ``` trigger.field('field-name'); ``` | Fill with the name of field |
+| ``` trigger.field('field-name').value(1); ``` | You can fill value with string or number |
+| ``` trigger.field('field-name').value().old('trigger-table-field-name'); ``` | The value will be filled with the old data value |
+| ``` trigger.field('field-name').value().new('trigger-table-field-name'); ``` | The value will be filled with the new data value |
+| ``` trigger.field('field-name').value().now(); ``` | The value will be filled with the timestamp |
+
+#### Dropping a spesific trigger
+If you want to delete a trigger, you can delete only trigger.
+```js
+Majo
+  .trigger()
+  .dropTrigger('database-name', 'trigger-name');
+```
+
+Also, if you want to delete many triggers at once, you can write like this:
+```js
+Majo
+  .trigger()
+  .dropTrigger('database-name', 'trigger-name', 
+  'trigger-name2', 'trigger-name3');
 ```

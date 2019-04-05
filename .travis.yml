@@ -1,5 +1,5 @@
 sudo: true
-dist: trusty
+dist: xenial
 services:
   - mysql
 language: node_js
@@ -19,19 +19,10 @@ before_install:
   - mysql -e "set GLOBAL max_connections=2000;"
   - mysql -e "set global sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';"
   - mysql -e "set session sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';"
-  - service mysql restart
 
 install:
   - npm install
   - npm install --save-dev
-
-addons:
-  apt:
-    sources:
-      - mysql-5.7-trusty
-    packages:
-      - mysql-server
-      - mysql-client
 
 before_script:
   - mysql -u root world < test/sql/world.sql
