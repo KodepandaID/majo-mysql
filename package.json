@@ -1,6 +1,6 @@
 {
   "name": "majo-mysql",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "Majo Mysql is a library that can help you build query, schema, and control your database more easier.",
   "main": "index.js",
   "scripts": {
@@ -36,10 +36,11 @@
     "eslint": "^5.15.0",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.16.0",
-    "mocha": "^6.0.2",
+    "mocha": "^6.1.2",
     "nyc": "^13.3.0"
   },
   "dependencies": {
+    "dotenv": "^7.0.0",
     "mysql": "^2.16.0"
   }
 }

@@ -1,8 +1,8 @@
 const Majo = require('../index').connection({
-  host: '127.0.0.1',
-  user: 'root',
-  password: '',
-  database: 'world',
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_DATABASE,
 });
 
 describe('Majo Mysql Trigger Testing', () => {
@@ -38,7 +38,7 @@ describe('Majo Mysql Trigger Testing', () => {
     Majo
       .trigger()
       .createBeforeUpdate('log_city', 'city', (trigger) => {
-        trigger.field('description').value('Update');
+        trigger.field('description').value().new('Name');
         trigger.field('created_at').value().now();
       })
       .then(() => {
@@ -53,7 +53,8 @@ describe('Majo Mysql Trigger Testing', () => {
     Majo
       .trigger()
       .createBeforeDelete('log_city', 'city', (trigger) => {
-        trigger.field('description').value('Delete');
+        // Test value with number, sorry for akward value
+        trigger.field('description').value(123);
         trigger.field('created_at').value().now();
       })
       .then(() => {
@@ -83,7 +84,7 @@ describe('Majo Mysql Trigger Testing', () => {
     Majo
       .trigger()
       .createAfterUpdate('log_city', 'city', (trigger) => {
-        trigger.field('description').value('Update');
+        trigger.field('description').value().old('Name');
         trigger.field('created_at').value().now();
       })
       .then(() => {

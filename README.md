@@ -17,7 +17,7 @@ You can report bugs and discuss features on the [GitHub issues page](https://git
 * Schema builders
 * Database Manager
 * Trigger
-* Relationships (WIP)
+* Relationships
 
 ## Installation
 ```shell
@@ -1790,7 +1790,7 @@ Majo
   });
 ```
 
-If you want to set the user password use **user.identified('password')**, you can also use empty password.
+If you want to set the user password use **user.identified('password')**, you can also use empty password. But, if you used Mysql version 8 and upper, you should use **user.identified('password', 'mysql8')**
 
 You can use the available grants.
 
@@ -1948,4 +1948,62 @@ Majo
   .trigger()
   .dropTrigger('database-name', 'trigger-name', 
   'trigger-name2', 'trigger-name3');
+```
+
+### Relationships
+#### Has One
+Majo provides feature Relationships table, like has one data or has many data on the table. For example, a users table might be associated with one phone. To use has one relationships, you can use like this:
+```js
+Majo
+  .select()
+  .from('users')
+  .hasOne('phone', 'Phone', 'user_id', 'user_id')
+  .then((results) => {
+    res.status(200).json(results);
+  });
+```
+
+Has one relationships use **hasOne()** method, and this method use argument like this **('relation-table', 'result-object-name', 'main-table-column', 'relation-column')**. In the example table **users** set column **user_id** as a primary key and on the table **phone** set column **user_id** as a foreign key.
+
+Then, if you want to use a lot has one relationships, you should use like this:
+
+```js
+Majo
+  .select()
+  .from('users')
+  .hasOne(
+    ['phone', 'Phone', 'user_id', 'user_id'],
+    ['address', 'Address', 'user_id', 'user_id'],
+  )
+  .then((results) => {
+    res.status(200).json(results);
+  });
+```
+
+#### Has Many
+```js
+Majo
+  .select()
+  .from('users')
+  .hasMany('orders', 'Order', 'user_id', 'user_id')
+  .then((results) => {
+    res.status(200).json(results);
+  });
+```
+
+Has many relationships use **hasMany()** method, and this method use argument like this **('relation-table', 'result-object-name', 'main-table-column', 'relation-column')**. In the example table **users** set column **user_id** as a primary key and on the table **orders** set column **user_id** as a foreign key.
+
+Then, if you want to use a lot has many relationships, you should use like this:
+
+```js
+Majo
+  .select()
+  .from('users')
+  .hasMany(
+    ['orders', 'Order', 'user_id', 'user_id'],
+    ['payments', 'Payment', 'user_id', 'user_id'],
+  )
+  .then((results) => {
+    res.status(200).json(results);
+  });
 ```
