@@ -1,8 +1,8 @@
 const Majo = require('../index').connection({
-  host: '127.0.0.1',
-  user: 'root',
-  password: '',
-  database: 'world',
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_DATABASE,
 });
 
 describe('Majo Mysql DB Manager Testing', () => {
@@ -164,7 +164,7 @@ describe('Majo Mysql DB Manager Testing', () => {
       .db()
       .createUser('majo', '%', (user) => {
         user.grantAll();
-        user.identified('password');
+        user.identified('password', process.env.DB_DRIVER);
       })
       .then(() => {
         done();
@@ -246,7 +246,7 @@ describe('Majo Mysql DB Manager Testing', () => {
         user.revokeShutdown();
         user.revokeSuper();
         user.revokeCreateTablespace();
-        user.identified('password');
+        user.identified('password', process.env.DB_DRIVER);
       })
       .then(() => {
         done();
