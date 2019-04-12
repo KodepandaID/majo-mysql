@@ -1731,6 +1731,62 @@ Majo
   });
 ```
 
+#### Show variables
+You can see all database variables on GLOBAL and SESSION.
+```js
+Majo
+  .db()
+  .showVariables()
+  .then((results) => {
+    res.status(200).json(results);
+  });
+```
+
+#### Show spesific variable
+You can see spesific variable on GLOBAL or SESSION.
+```js
+Majo
+  .db()
+  .showVariable('max_connection')
+  .then((results) => {
+    res.status(200).json(results);
+  });
+```
+
+#### Show system variables sql_mode
+You can see sql_mode variable settings, with **selectSystemVariable()** method.
+```js
+Majo
+  .db()
+  .selectSystemVariable()
+  .then((results) => {
+    res.status(200).json(results);
+  });
+```
+
+#### Set sql_mode
+```js
+Majo
+  .db()
+  .setSqlMode('value');
+```
+
+#### Set global variable
+To assign a value to global system variable, use **setGlobalVariable()** method. If you want to set value with default, use only one argument, only name variable.
+```js
+Majo
+  .db()
+  .setGlobalVariable('variable-name', 'value');
+```
+
+#### Set session variable
+To assign a value to global system variable, use **setSessionVariable()** method. If you want to set value with default, use only one argument, only name variable.
+```js
+Majo
+  .db()
+  .setSessionVariable('variable-name', 'value');
+```
+
 #### Create database
 With majo you can create a new database. You can set the character type and collation like this:
 ```js

@@ -354,4 +354,88 @@ describe('Majo Mysql DB Manager Testing', () => {
         done(err);
       });
   });
+
+  it('Run showVariables() method', (done) => {
+    Majo
+      .db()
+      .showVariables()
+      .then(() => {
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+
+  it('Run showVariable() method', (done) => {
+    Majo
+      .db()
+      .showVariable('max_connection')
+      .then(() => {
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+
+  it('Run selectSystemVariable() method', (done) => {
+    Majo
+      .db()
+      .selectSystemVariable()
+      .then(() => {
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+
+  it('Run setSqlMode) method', (done) => {
+    Majo
+      .db()
+      .setSqlMode('TRADITIONAL')
+      .then(() => {
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+
+  it('Run setGlobalVariable) method', (done) => {
+    Majo
+      .db()
+      .setGlobalVariable('sql_mode', 'TRADITIONAL')
+      .then(() => {
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+
+  it('Run setSessionlVariable) method', (done) => {
+    Majo
+      .db()
+      .setSessionVariable('sql_mode', 'TRADITIONAL')
+      .then(() => {
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+
+  it('Run setLocallVariable) method', (done) => {
+    Majo
+      .db()
+      .setLocalVariable('sql_mode', 'TRADITIONAL')
+      .then(() => {
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
 });
