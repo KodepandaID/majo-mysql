@@ -133,7 +133,7 @@ majo
 SELECT DISTINCT * FROM users
 ```
 #### Table - .table(table name)
-You use **.table()** or **from()** for selecting spesific table.
+You use **.table()** or **from()** for selecting specific table.
 ```js
 majo
   .table('users')
@@ -183,7 +183,7 @@ majo
 ```sql
 SELECT COUNT(*) FROM users
 ```
-Or you can **count** as a spesific column like this:
+Or you can **count** as a specific column like this:
 ```js
 majo
   .table('users')
@@ -231,7 +231,7 @@ majo
 ```sql
 SELECT AVG(*) FROM orders
 ```
-Or you can get **avg** from spesific column, with combine method.
+Or you can get **avg** from specific column, with combine method.
 ```js
 majo
   .table('orders')
@@ -1655,7 +1655,7 @@ Majo
 ```
 
 #### Show all available database
-Show all available databases with spesific information.
+Show all available databases with specific information.
 ```js
 Majo
   .db()
@@ -1665,7 +1665,7 @@ Majo
   });
 ```
 
-#### Show spesific database
+#### Show specific database
 Shows the specific database you selected.
 ```js
 Majo
@@ -1677,7 +1677,7 @@ Majo
 ```
 
 #### Show database tables
-You can see the list of tables with spesific information.
+You can see the list of tables with specific information.
 ```js
 Majo
   .db()
@@ -1687,8 +1687,8 @@ Majo
   });
 ```
 
-#### Show spesific table information from your database
-You can see the spesific information from your table
+#### Show specific table information from your database
+You can see the specific information from your table
 ```js
 Majo
   .db()
@@ -1720,8 +1720,8 @@ Majo
   });
 ```
 
-#### Show the spesific user with information
-You can see the spesific user in your database.
+#### Show the specific user with information
+You can see the specific user in your database.
 ```js
 Majo
   .db()
@@ -1742,8 +1742,8 @@ Majo
   });
 ```
 
-#### Show spesific variable
-You can see spesific variable on GLOBAL or SESSION.
+#### Show specific variable
+You can see specific variable on GLOBAL or SESSION.
 ```js
 Majo
   .db()
@@ -1820,7 +1820,7 @@ Majo
 ```
 
 #### Drop database
-To dropping a spesific database
+To dropping a specific database
 ```js
 Majo
   .db()
@@ -1828,7 +1828,7 @@ Majo
 ```
 
 #### Rename database
-You can renaming the spesific database without losing your data.
+You can renaming the specific database without losing your data.
 ```js
 Majo
   .db()
@@ -1836,7 +1836,7 @@ Majo
 ```
 
 #### Create user privileges
-You can create a new user with spesific grants.
+You can create a new user with specific grants.
 ```js
 Majo
   .db()
@@ -1895,7 +1895,7 @@ You can use the available revoke grants.
 | ```user.revokeCreateTablespace()``` | Revoke create tablespace |
 
 #### Drop user privileges
-To dropping a spesific user use like this:
+To dropping a specific user use like this:
 ```js
 Majo
   .db()
@@ -1903,7 +1903,7 @@ Majo
 ```
 
 #### Clone database
-You can cloning structured and data from spesific database to a new database like this:
+You can cloning structured and data from specific database to a new database like this:
 ```js
 Majo
   .db()
@@ -1911,7 +1911,7 @@ Majo
 ```
 
 #### Clone only structured database
-You can cloning only structured from spesific database to a new database like this:
+You can cloning only structured from specific database to a new database like this:
 ```js
 Majo
   .db()
@@ -1941,8 +1941,8 @@ Majo
   });
 ```
 
-#### Show spesific trigger on database
-Also, you can see the detail spesific trigger from your database. Use method **showTrigger()** likke this:
+#### Show specific trigger on database
+Also, you can see the detail specific trigger from your database. Use method **showTrigger()** likke this:
 ```js
 Majo
   .trigger()
@@ -1990,7 +1990,7 @@ Also, a little explanation on insert value trigger. Here are some commands that 
 | ``` trigger.field('field-name').value().new('trigger-table-field-name'); ``` | The value will be filled with the new data value |
 | ``` trigger.field('field-name').value().now(); ``` | The value will be filled with the timestamp |
 
-#### Dropping a spesific trigger
+#### Dropping a specific trigger
 If you want to delete a trigger, you can delete only trigger.
 ```js
 Majo
