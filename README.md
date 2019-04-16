@@ -1654,6 +1654,16 @@ Majo
   .db()
 ```
 
+If you want to check the database is connected or not, you can use **testConnection()** method
+```js
+Majo
+  .db()
+  .testConnection()
+  .then((results) => {
+    res.status(200).json(results);
+  });
+```
+
 #### Show all available database
 Show all available databases with specific information.
 ```js
@@ -1687,8 +1697,19 @@ Majo
   });
 ```
 
-#### Show specific table information from your database
-You can see the specific information from your table
+#### Show spesific table information from your database
+You can see the table information from your database
+```js
+Majo
+  .db()
+  .showTableInfo('database-name', 'table-name')
+  .then((results) => {
+    res.status(200).json(results);
+  });
+```
+
+#### Show specific table information with columns information from your database
+You can see the table information with columns information from your table
 ```js
 Majo
   .db()
