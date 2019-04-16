@@ -6,6 +6,18 @@ const Majo = require('../index').connection({
 });
 
 describe('Majo Mysql DB Manager Testing', () => {
+  it('Run testConnection() method', (done) => {
+    Majo
+      .db()
+      .testConnection()
+      .then(() => {
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+
   it('Run showDatabases() method', (done) => {
     Majo
       .db()
