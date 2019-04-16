@@ -42,6 +42,18 @@ describe('Majo Mysql DB Manager Testing', () => {
       });
   });
 
+  it('Run showTableInfo() method', (done) => {
+    Majo
+      .db()
+      .showTableInfo('world', 'city')
+      .then(() => {
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+
   it('Run showIndexes() method', (done) => {
     Majo
       .db()
