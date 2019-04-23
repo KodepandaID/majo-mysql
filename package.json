@@ -1,6 +1,6 @@
 {
   "name": "majo-mysql",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "description": "Majo Mysql is a library that can help you build query, schema, and control your database more easier.",
   "main": "index.js",
   "scripts": {

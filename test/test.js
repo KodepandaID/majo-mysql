@@ -482,6 +482,7 @@ describe('Majo Mysql Testing', () => {
           Name: 'Gaza',
           CountryCode: 'PSE',
         })
+        .andOrWhere('CountryCode', 'PSE')
         .get()
         .then(() => {
           done();
@@ -502,7 +503,12 @@ describe('Majo Mysql Testing', () => {
           Name: 'Gaza',
           CountryCode: 'PSE',
         })
-        .get()
+        .andOrWhere({
+          Name: 'Hebron',
+          CountryCode: 'PSE',
+        })
+        .andOrWhere('Name', 'like', '%Gaza%')
+        .makeQuery()
         .then(() => {
           done();
         })
