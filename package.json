@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha --timeout 30000 --exit",
-    "coverage": "nyc npm test && nyc report --reporter=text-lcov --skip-empty | coveralls"
+    "coverage": "nyc npm test && nyc report --reporter=text-lcov --skip-empty | coveralls",
+    "coverage:standard": "nyc npm test && nyc report --reporter=text-lcov --skip-empty",
+    "coverage:generate": "nyc report --reporter=html"
   },
   "keywords": [
     "sql",
