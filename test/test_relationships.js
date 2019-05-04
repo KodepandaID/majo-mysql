@@ -71,4 +71,113 @@ describe('Majo Mysql Relationships Testing', () => {
         done(err);
       });
   });
+
+  it('Run hasOne() method with condition', (done) => {
+    Majo
+      .select()
+      .from('country')
+      .where('Code', 'IDN')
+      .hasOne('city', 'city', 'Code', 'CountryCode')
+      .hasOne('city', 'kota', 'Code', 'CountryCode', (condition) => {
+        condition.select('city.ID', 'city.Name', 'country.Name AS CountryName');
+        condition.leftJoin('country', 'city.CountryCode', '=', 'country.Code');
+        condition.where('city.Population', '<', 100000);
+        condition.orderByRaw('city.Name DESC');
+      })
+      .first()
+      .then(() => {
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+
+  it('Run hasOne() method with condition and many data', (done) => {
+    Majo
+      .select()
+      .from('country')
+      .where('Code', 'IDN')
+      .hasOne('city', 'city', 'Code', 'CountryCode')
+      .hasOne('city', 'kota', 'Code', 'CountryCode', (condition) => {
+        condition.select('city.ID', 'city.Name', 'country.Name AS CountryName');
+        condition.leftJoin('country', 'city.CountryCode', '=', 'country.Code');
+        condition.where('city.Population', '<', 100000);
+        condition.orderByRaw('city.Name DESC');
+      })
+      .get()
+      .then(() => {
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+
+  it('Run hasMany() method with condition', (done) => {
+    Majo
+      .select()
+      .from('country')
+      .where('Code', 'IDN')
+      .hasMany('city', 'city', 'Code', 'CountryCode')
+      .hasMany('city', 'city', 'Code', 'CountryCode', (condition) => {
+        condition.select('city.ID', 'city.Name', 'country.Name AS CountryName');
+        condition.leftJoin('country', 'city.CountryCode', '=', 'country.Code');
+        condition.orderByRaw('city.Name ASC');
+        condition.limit(2);
+      })
+      .first()
+      .then(() => {
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+
+  it('Run hasOne() method with condition and many data', (done) => {
+    Majo
+      .select()
+      .from('country')
+      .where('Code', 'IDN')
+      .hasOne('city', 'city', 'Code', 'CountryCode')
+      .hasOne('city', 'city', 'Code', 'CountryCode', (condition) => {
+        condition.select('city.ID', 'city.Name', 'country.Name AS CountryName');
+        condition.leftJoin('country', 'city.CountryCode', '=', 'country.Code');
+      })
+      .get()
+      .then(() => {
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+
+  it('Run hasMany() method with condition and many data', (done) => {
+    Majo
+      .select()
+      .from('country')
+      .where('Code', 'IDN')
+      .hasMany('city', 'city', 'Code', 'CountryCode')
+      .hasMany('city', 'cities', 'Code', 'CountryCode', (condition) => {
+        condition.select('city.ID', 'city.Name', 'country.Name AS CountryName');
+        condition.leftJoin('country', 'city.CountryCode', '=', 'country.Code');
+        condition.orderByRaw('city.Name DESC');
+        condition.limit(2);
+      })
+      .hasOne('city', 'citi', 'Code', 'CountryCode', (condition) => {
+        condition.select('city.ID', 'city.Name', 'country.Name AS CountryName');
+        condition.leftJoin('country', 'city.CountryCode', '=', 'country.Code');
+        condition.where('city.Population', '<', 100000);
+        condition.orderByRaw('city.Name DESC');
+      })
+      .first()
+      .then(() => {
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
 });
