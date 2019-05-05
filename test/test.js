@@ -359,6 +359,7 @@ describe('Majo Mysql Testing', () => {
       Majo
         .table('city')
         .where('Name', 'Kabul')
+        .andWhere('Name', 'like', '%Mazar%')
         .get()
         .then(() => {
           done();
@@ -411,6 +412,7 @@ describe('Majo Mysql Testing', () => {
       Majo
         .table('city')
         .whereRaw('Name = \'Kabul\'')
+        .andWhere('CountryCode', '!=', null)
         .get()
         .then(() => {
           done();
@@ -483,6 +485,7 @@ describe('Majo Mysql Testing', () => {
           CountryCode: 'PSE',
         })
         .andOrWhere('CountryCode', 'PSE')
+        .andOrWhere('CountryCode', '?', 'IDN')
         .get()
         .then(() => {
           done();
