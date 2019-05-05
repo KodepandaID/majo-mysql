@@ -2084,3 +2084,32 @@ Majo
     res.status(200).json(results);
   });
 ```
+
+Sometimes, the relationship requires some adjustment. Therefore, you can use some queries for your relationships like this:
+```js
+Majo
+  .select()
+  .from('users')
+  .hasOne('orders', 'Order', 'user_id', 'user_id', (condition) => {
+    condition.select('order_id', 'user_id', 'price');
+    condition.where('price', '>', 5000);
+    condition.orderBy('date', 'DESC');
+  })
+  .then((results) => {
+    res.status(200).json(results);
+  });
+```
+
+```js
+Majo
+  .select()
+  .from('users')
+  .hasMany('orders', 'Order', 'user_id', 'user_id', (condition) => {
+    condition.select('order_id', 'user_id', 'price');
+    condition.where('price', '>', 5000);
+    condition.orderBy('date', 'DESC');
+  })
+  .then((results) => {
+    res.status(200).json(results);
+  });
+```
