@@ -1409,6 +1409,71 @@ describe('Majo Mysql Testing', () => {
   });
 
   describe('# Testing Schema Builder', () => {
+    it('Run analyzeTable() method', (done) => {
+      Majo
+        .schema()
+        .withSchema('world')
+        .analyzeTable('city')
+        .then(() => {
+          done();
+        })
+        .catch((err) => {
+          done(err);
+        });
+    });
+
+    it('Run checkTable() method', (done) => {
+      Majo
+        .schema()
+        .withSchema('world')
+        .checkTable('city')
+        .then(() => {
+          done();
+        })
+        .catch((err) => {
+          done(err);
+        });
+    });
+
+    it('Run optimizeTable() method', (done) => {
+      Majo
+        .schema()
+        .withSchema('world')
+        .optimizeTable('city')
+        .then(() => {
+          done();
+        })
+        .catch((err) => {
+          done(err);
+        });
+    });
+
+    it('Run checksumTable() method', (done) => {
+      Majo
+        .schema()
+        .withSchema('world')
+        .checksumTable('city')
+        .then(() => {
+          done();
+        })
+        .catch((err) => {
+          done(err);
+        });
+    });
+
+    it('Run repairTable() method', (done) => {
+      Majo
+        .schema()
+        .withSchema('world')
+        .repairTable('city')
+        .then(() => {
+          done();
+        })
+        .catch((err) => {
+          done(err);
+        });
+    });
+
     it('createTable() method and withSchema() method', (done) => {
       Majo
         .schema()
