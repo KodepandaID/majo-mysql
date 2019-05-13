@@ -1,4 +1,5 @@
 # Majo Mysql
+[![npm download](https://img.shields.io/npm/dt/majo-mysql.svg)](https://npmjs.org/package/majo-mysql)
 [![npm version](http://img.shields.io/npm/v/majo-mysql.svg)](https://npmjs.org/package/majo-mysql)
 [![Build Status](https://travis-ci.org/LordAur/majo-mysql.svg?branch=master)](https://travis-ci.org/LordAur/majo-mysql)
 [![Coverage Status](https://coveralls.io/repos/github/LordAur/majo-mysql/badge.svg?branch=master)](https://coveralls.io/github/LordAur/majo-mysql?branch=master)
@@ -1642,6 +1643,57 @@ Majo
   .schema()
   .updateTable('posts', (table) => {
     table.dropForeign('id');
+  });
+```
+
+### Table Maintenance
+#### Analyze Table
+```js
+Majo
+  .schema()
+  .analyzeTable('users')
+  .then((results) => {
+    res.status(200).json(results);
+  });
+```
+
+#### Check Table
+```js
+Majo
+  .schema()
+  .checkTable('users')
+  .then((results) => {
+    res.status(200).json(results);
+  });
+```
+
+#### Checksum Table
+```js
+Majo
+  .schema()
+  .checksumTable('users')
+  .then((results) => {
+    res.status(200).json(results);
+  });
+```
+
+#### Optimize Table
+```js
+Majo
+  .schema()
+  .optimizeTable('users')
+  .then((results) => {
+    res.status(200).json(results);
+  });
+```
+
+#### Repair Table
+```js
+Majo
+  .schema()
+  .repairTable('users')
+  .then((results) => {
+    res.status(200).json(results);
   });
 ```
 
