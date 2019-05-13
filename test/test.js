@@ -1395,6 +1395,17 @@ describe('Majo Mysql Testing', () => {
           done(err);
         });
     });
+
+    it('rawQuery() method', (done) => {
+      Majo
+        .rawQuery('SELECT * FROM city')
+        .then(() => {
+          done();
+        })
+        .catch((err) => {
+          done(err);
+        });
+    });
   });
 
   describe('# Testing Schema Builder', () => {
