@@ -1944,7 +1944,7 @@ You can change user data such as passwords, add grant or revoke grant.
 ```js
 Majo
   .db()
-  .createUser('majo', '%', (user) => {
+  .updateUser('majo', '%', (user) => {
     user.revokeAll();
     user.identified('new-password');
   });
