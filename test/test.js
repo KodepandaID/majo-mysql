@@ -1803,6 +1803,20 @@ describe('Majo Mysql Testing', () => {
         });
     });
 
+    it('updateTable() method and change table configuration', (done) => {
+      Majo
+        .schema()
+        .updateTable('city', (table) => {
+          table.setComment('tester');
+        })
+        .then(() => {
+          done();
+        })
+        .catch((err) => {
+          done(err);
+        });
+    });
+
     it('updateTable() method', (done) => {
       Majo
         .schema()
@@ -1889,22 +1903,6 @@ describe('Majo Mysql Testing', () => {
           table.foreign('username')
             .references('username').on('testforeign3')
             .onUpdate('cascade');
-        })
-        .then(() => {
-          done();
-        })
-        .catch((err) => {
-          done(err);
-        });
-    });
-
-    it('updateTable() method with renameColumn() method', (done) => {
-      Majo
-        .schema()
-        .updateTable('dbTestAutoIncrement', (table) => {
-          table.unique('test5');
-          table.index('test6');
-          table.renameColumn('test4', 'test41');
         })
         .then(() => {
           done();
