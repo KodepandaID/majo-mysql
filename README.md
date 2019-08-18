@@ -2165,3 +2165,30 @@ Majo
     res.status(200).json(results);
   });
 ```
+
+#### Has Row
+If you want to make a custom object relationship you can use **hasRow()** method. For example, you want to get a total price order but you should sum the price field. You can select a return field and get the value.
+
+The first argument is a name table relationship, the second argument is the object name you want, and third is a return field from querying.
+
+```js
+Majo
+  .select()
+  .from('users')
+  .hasRow('orders', 'total_order', 'total_order', 'user_id', 'user_id', (condition) => {
+    condition.sum('total_price', 'total_order');
+  })
+  .first()
+  .then((results) => {
+    res.status(200).json(results);
+  });
+```
+
+Then, the object return looks like this:
+```json
+{
+  "id": 1,
+  "name": "test",
+  "total_order": 100000,
+}
+```

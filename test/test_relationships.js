@@ -100,24 +100,24 @@ describe('Majo Mysql Relationships Testing', () => {
       .where('Code', 'IDN')
       .hasOne('city', 'city', 'Code', 'CountryCode')
       .hasOne('city', 'kota', 'Code', 'CountryCode', (condition) => {
-        condition.select('city.ID', 'city.Name');
+        condition.select('ID', 'Name');
         condition.where({
           District: 'Sumatera Utara',
           Name: 'Medan',
         });
-        condition.orderByRaw('city.Name DESC');
+        condition.orderByRaw('Name DESC');
       })
       .hasOne('city', 'kota2', 'Code', 'CountryCode', (condition) => {
-        condition.select('city.ID', 'city.Name');
+        condition.select('ID', 'Name');
         condition.where('District', 'Sumatera Utara');
         condition.andWhere('Name', null);
         condition.orWhere('District', 'West Java');
         condition.andOrWhere('Name', 'Tasikmalaya');
         condition.orWhere('District', '?', 'Bali');
-        condition.orderByRaw('city.Name DESC');
+        condition.orderByRaw('Name DESC');
       })
       .hasOne('city', 'kota3', 'Code', 'CountryCode', (condition) => {
-        condition.select('city.ID', 'city.Name');
+        condition.select('ID', 'Name');
         condition.where('District', 'Sumatera Utara');
         condition.orWhere({
           District: 'West Java',
@@ -126,7 +126,7 @@ describe('Majo Mysql Relationships Testing', () => {
         condition.orWhere('District', '=', 'Bali');
       })
       .hasOne('city', 'kota4', 'Code', 'CountryCode', (condition) => {
-        condition.select('city.ID', 'city.Name');
+        condition.select('ID', 'Name');
         condition.where('District', 'Sumatera Utara');
         condition.andWhere('Name', null);
         condition.orWhere('District', 'West Java');
@@ -137,20 +137,10 @@ describe('Majo Mysql Relationships Testing', () => {
         condition.andOrWhere('District', '=', 'Central Java');
       })
       .hasOne('city', 'kota5', 'Code', 'CountryCode', (condition) => {
-        condition.select('city.ID', 'city.Name');
+        condition.select('ID', 'Name');
         condition.whereRaw('District = \'Sumatera Utara\'');
         condition.groupBy('CountryCode');
         condition.groupByRaw('CountryCode, Population');
-      })
-      .hasOne('city', 'kota5', 'Code', 'CountryCode', (condition) => {
-        condition.having('CountryCode', 'AFG');
-        condition.having('Population', '>', 70000);
-        condition.havingIn('Population', [127800, 1780000]);
-        condition.havingNotIn('Population', [127800, 1780000]);
-        condition.havingNull('GNP');
-        condition.havingNotNull('GNP');
-        condition.havingBetween('Population', 127800, 1780000);
-        condition.havingNotBetween('Population', 127800, 1780000);
       })
       .get()
       .then(() => {
@@ -240,7 +230,7 @@ describe('Majo Mysql Relationships Testing', () => {
       .hasOne('city', 'city', 'Code', 'CountryCode', (condition) => {
         condition.select('city.ID', 'city.Name', 'country.Name AS CountryName');
         condition.leftJoin('country', 'city.CountryCode', '=', 'country.Code');
-        condition.whereNull('Name');
+        condition.whereNull('city.Name');
         condition.whereNotNull('District');
       })
       .get()
@@ -280,10 +270,7 @@ describe('Majo Mysql Relationships Testing', () => {
         condition.whereNotIn('Population', null);
       })
       .hasMany('city', 'JumlahKota', 'Code', 'CountryCode', (condition) => {
-        condition.count('city.ID');
-      })
-      .hasMany('countrylanguage', 'JumlahBahasa', 'Code', 'CountryCode', (condition) => {
-        condition.countDistinct('city.ID');
+        condition.count('ID');
       })
       .hasMany('city', 'Populasi', 'Code', 'CountryCode', (condition) => {
         condition.sum('city.Population', 'JumlahPopulasi');
@@ -292,6 +279,23 @@ describe('Majo Mysql Relationships Testing', () => {
         condition.avg('city.Population', 'RataRataPopulasi');
       })
       .get()
+      .then(() => {
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+
+  it('hasRow()', (done) => {
+    Majo
+      .select('Name', 'CountryCode')
+      .from('city')
+      .where('CountryCode', 'AFG')
+      .hasRow('city', 'total_population', 'population', 'CountryCode', 'CountryCode', (condition) => {
+        condition.sum('Population', 'population');
+      })
+      .first()
       .then(() => {
         done();
       })
