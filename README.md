@@ -10,7 +10,11 @@ Majo Mysql can only be used on the NodeJS version 8 or higher. Majo Mysql suppor
 
 Majo Mysql is available for use under [MIT LICENSE](https://github.com/LordAur/majo-mysql/blob/master/LICENSE)
 
-You can report bugs and discuss features on the [GitHub issues page](https://github.com/LordAur/majo-mysql/issues), or send tweets to [@LordAur](https://twitter.com/LordAur).
+This package created by [Yudha Pratama](https://github.com/LordAur) If you found bugs or errors, you can report at Github Issue or send a direct message to my [twitter](https://twitter.com/LordAur).
+
+If you like this project, please support us to give a [Coffee](https://ko-fi.com/kodepandakreasimedia)
+
+[![ko-fi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/T6T312Z2T)
 
 ## Features
 * Full featured query
@@ -1178,7 +1182,6 @@ majo
     first_name: 'Test',
     last_name: 'User'
   })
-  .first()
   .then((results) => {
     res.status(200).json(results);
   })
