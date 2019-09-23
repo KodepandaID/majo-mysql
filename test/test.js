@@ -410,7 +410,7 @@ describe('Majo Mysql Testing', () => {
 
     it('whereRaw() method', (done) => {
       Majo
-        .table('city')
+        .from('city')
         .whereRaw('Name = \'Kabul\'')
         .andWhere('CountryCode', '!=', null)
         .get()
@@ -424,7 +424,7 @@ describe('Majo Mysql Testing', () => {
 
     it('orWhere() method', (done) => {
       Majo
-        .table('city')
+        .from('city')
         .where({
           Name: 'Kabul',
           CountryCode: 'AFG',
