@@ -107,41 +107,6 @@ describe('Majo Mysql Relationships Testing', () => {
         });
         condition.orderByRaw('Name DESC');
       })
-      .hasOne('city', 'kota2', 'Code', 'CountryCode', (condition) => {
-        condition.select('ID', 'Name');
-        condition.where('District', 'Sumatera Utara');
-        condition.andWhere('Name', null);
-        condition.orWhere('District', 'West Java');
-        condition.andOrWhere('Name', 'Tasikmalaya');
-        condition.orWhere('District', '?', 'Bali');
-        condition.orderByRaw('Name DESC');
-      })
-      .hasOne('city', 'kota3', 'Code', 'CountryCode', (condition) => {
-        condition.select('ID', 'Name');
-        condition.where('District', 'Sumatera Utara');
-        condition.orWhere({
-          District: 'West Java',
-          Name: 'Tasikmalaya',
-        });
-        condition.orWhere('District', '=', 'Bali');
-      })
-      .hasOne('city', 'kota4', 'Code', 'CountryCode', (condition) => {
-        condition.select('ID', 'Name');
-        condition.where('District', 'Sumatera Utara');
-        condition.andWhere('Name', null);
-        condition.orWhere('District', 'West Java');
-        condition.andOrWhere({
-          District: 'Bali',
-        });
-        condition.andOrWhere('District', '?', 'Aceh');
-        condition.andOrWhere('District', '=', 'Central Java');
-      })
-      .hasOne('city', 'kota5', 'Code', 'CountryCode', (condition) => {
-        condition.select('ID', 'Name');
-        condition.whereRaw('District = \'Sumatera Utara\'');
-        condition.groupBy('CountryCode');
-        condition.groupByRaw('CountryCode, Population');
-      })
       .get()
       .then(() => {
         done();
